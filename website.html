@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="全国调研问卷平台为企业与研究机构提供问卷设计、内容审核、通讯录管理、多方式发送、回收监测和答卷分析的一体化调研服务。">
+  <title>全国调研问卷平台｜让可信数据支撑科学决策</title>
+  <style>
+    :root {
+      --navy-950:#061b46;
+      --navy-900:#08265e;
+      --navy-800:#0d377d;
+      --navy-700:#124b9a;
+      --blue-600:#1f66d1;
+      --blue-500:#3479e3;
+      --blue-100:#eaf2ff;
+      --red-600:#c92b43;
+      --red-500:#df4054;
+      --gold-500:#c9a560;
+      --gold-300:#ead4a5;
+      --ink-950:#0c1e3c;
+      --ink-800:#20334f;
+      --ink-600:#52657f;
+      --ink-500:#718198;
+      --line:#dfe7f2;
+      --line-strong:#cdd9e8;
+      --wash:#f4f7fb;
+      --paper:#fff;
+      --green:#14945b;
+      --shadow-sm:0 8px 24px rgba(9,37,88,.08);
+      --shadow-lg:0 28px 70px rgba(6,27,70,.18);
+      --radius-sm:10px;
+      --radius-md:16px;
+      --radius-lg:24px;
+      --max:1200px;
+      --ease:cubic-bezier(.2,.75,.25,1);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:92px; }
+    body {
+      margin:0;
+      color:var(--ink-950);
+      font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      background:var(--paper);
+    }
+    body.menu-open { overflow:hidden; }
+    button, a { font:inherit; }
+    button { border:0; cursor:pointer; }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; }
+    .skip-link { position:fixed; z-index:1000; top:8px; left:8px; padding:10px 14px; color:#fff; background:var(--navy-950); border-radius:8px; transform:translateY(-150%); }
+    .skip-link:focus { transform:none; }
+    .container { width:min(var(--max), calc(100% - 48px)); margin-inline:auto; }
+    .section { padding:112px 0; }
+    .section-soft { background:var(--wash); }
+    .section-dark { position:relative; color:#fff; overflow:hidden; background:linear-gradient(135deg,var(--navy-950),var(--navy-800)); }
+    .section-kicker { display:flex; align-items:center; gap:10px; margin-bottom:14px; color:var(--blue-600); font-size:13px; font-weight:700; letter-spacing:.16em; }
+    .section-kicker::before { content:""; width:28px; height:2px; background:linear-gradient(90deg,var(--red-500),var(--gold-500)); }
+    .section-dark .section-kicker { color:var(--gold-300); }
+    .section-title { max-width:760px; margin:0; color:var(--ink-950); font-size:clamp(30px,4vw,48px); line-height:1.2; letter-spacing:-.03em; }
+    .section-dark .section-title { color:#fff; }
+    .section-lead { max-width:700px; margin:18px 0 0; color:var(--ink-600); font-size:17px; line-height:1.9; }
+    .section-dark .section-lead { color:#c7d7f2; }
+    .section-head { display:flex; align-items:flex-end; justify-content:space-between; gap:32px; margin-bottom:52px; }
+    .section-head-note { max-width:360px; margin:0; color:var(--ink-500); font-size:14px; line-height:1.8; }
+
+    .authority-bar { position:sticky; z-index:110; top:0; height:6px; background:linear-gradient(90deg,var(--red-600) 0 35%,#ee6a66 52%,var(--red-600) 68%,var(--navy-800) 100%); }
+    .site-header { position:sticky; z-index:100; top:6px; background:rgba(6,27,70,.96); border-bottom:1px solid rgba(255,255,255,.1); backdrop-filter:blur(16px); transition:box-shadow .25s var(--ease); }
+    .site-header.is-scrolled { box-shadow:0 12px 36px rgba(4,16,46,.28); }
+    .header-inner { display:flex; align-items:center; min-height:78px; }
+    .brand { display:flex; align-items:center; gap:14px; flex-shrink:0; color:#fff; text-align:left; }
+    .brand-emblem { width:50px; height:50px; flex:none; }
+    .brand-name { display:block; white-space:nowrap; font-size:23px; font-weight:700; letter-spacing:.12em; line-height:1.2; }
+    .brand-sub { display:block; margin-top:3px; color:#a9c0ee; font-size:11px; font-weight:500; letter-spacing:.24em; white-space:nowrap; }
+    .site-nav { display:flex; flex-shrink:0; align-items:center; gap:4px; margin-left:auto; }
+    .site-nav a { position:relative; padding:29px 17px 27px; color:#c6d5f2; font-size:14px; font-weight:600; white-space:nowrap; }
+    .site-nav a::after { content:""; position:absolute; right:17px; bottom:18px; left:17px; height:2px; background:var(--red-500); transform:scaleX(0); transform-origin:center; transition:transform .2s var(--ease); }
+    .site-nav a:hover,.site-nav a[aria-current="page"] { color:#fff; }
+    .site-nav a:hover::after,.site-nav a[aria-current="page"]::after { transform:scaleX(1); }
+    .header-actions { display:flex; flex-shrink:0; align-items:center; gap:10px; margin-left:18px; }
+    .button { display:inline-flex; min-height:46px; align-items:center; justify-content:center; gap:9px; padding:0 22px; font-size:14px; font-weight:700; border:1px solid transparent; border-radius:9px; transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease); }
+    .button:hover { transform:translateY(-2px); }
+    .button-primary { color:#fff; background:linear-gradient(135deg,var(--navy-800),var(--blue-600)); box-shadow:0 10px 24px rgba(13,55,125,.2); }
+    .button-primary:hover { box-shadow:0 14px 30px rgba(13,55,125,.28); }
+    .button-light { color:var(--navy-800); background:#fff; border-color:var(--line-strong); }
+    .button-light:hover { border-color:#9db8e0; box-shadow:var(--shadow-sm); }
+    .button-ghost { color:#fff; background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.28); }
+    .button-ghost:hover { background:rgba(255,255,255,.14); }
+    .button-gold { color:var(--navy-950); background:linear-gradient(135deg,#f6e2b8,var(--gold-500)); box-shadow:0 12px 28px rgba(201,165,96,.2); }
+    .menu-toggle { display:none; width:44px; height:44px; padding:10px; background:transparent; border:1px solid rgba(255,255,255,.25); border-radius:9px; }
+    .menu-toggle span { display:block; height:2px; margin:5px 0; background:#fff; transition:.25s var(--ease); }
+    .mobile-auth-button { display:none; min-height:44px; align-items:center; justify-content:center; margin-top:8px; color:var(--navy-950); font-weight:700; background:linear-gradient(135deg,#f6e2b8,var(--gold-500)); border-radius:9px; }
+
+    body.modal-open { overflow:hidden; }
+    .auth-modal { position:fixed; z-index:500; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(3,15,42,.68); backdrop-filter:blur(8px); }
+    .auth-modal[hidden] { display:none; }
+    .auth-dialog { width:100%; max-width:460px; min-width:0; overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,.7); border-radius:20px; box-shadow:0 34px 90px rgba(3,15,42,.32); }
+    .auth-dialog-head { position:relative; overflow:hidden; padding:28px 30px 24px; color:#fff; background:linear-gradient(135deg,var(--navy-950),var(--navy-800)); }
+    .auth-dialog-head::after { content:""; position:absolute; right:0; bottom:0; left:0; height:4px; background:linear-gradient(90deg,var(--red-600),#ed6b70 55%,var(--navy-700)); }
+    .auth-dialog-brand { position:relative; z-index:1; display:flex; align-items:center; gap:12px; }
+    .auth-dialog-brand .brand-emblem { width:42px; height:42px; }
+    .auth-dialog-brand-copy { min-width:0; }
+    .auth-dialog-brand-name { display:block; color:#fff; font-size:15px; font-weight:700; letter-spacing:.1em; white-space:nowrap; }
+    .auth-dialog-brand-sub { display:block; margin-top:3px; color:#a9c0ee; font-size:7.5px; font-weight:500; letter-spacing:.18em; white-space:nowrap; }
+    .auth-dialog-head h2 { position:relative; z-index:1; margin:20px 0 0; font-size:25px; }
+    .auth-dialog-head p { position:relative; z-index:1; margin:8px 0 0; color:#b9cbe8; font-size:12px; line-height:1.7; }
+    .auth-close { position:absolute; z-index:2; top:18px; right:18px; display:grid; width:34px; height:34px; place-items:center; color:#d8e4f7; font-size:22px; background:rgba(255,255,255,.08); border-radius:50%; }
+    .auth-close:hover { color:#fff; background:rgba(255,255,255,.16); }
+    .auth-dialog-body { padding:26px 30px 30px; }
+    .auth-tabs { display:grid; grid-template-columns:repeat(2,1fr); padding:4px; margin-bottom:22px; background:var(--wash); border-radius:10px; }
+    .auth-tab { min-height:38px; color:var(--ink-500); font-size:13px; font-weight:700; background:transparent; border-radius:7px; }
+    .auth-tab[aria-selected="true"] { color:var(--navy-800); background:#fff; box-shadow:0 3px 10px rgba(9,37,88,.09); }
+    .auth-field { display:block; margin-bottom:16px; }
+    .auth-field-label { display:block; margin-bottom:7px; color:var(--ink-800); font-size:12px; font-weight:700; }
+    .auth-input { width:100%; height:46px; padding:0 13px; color:var(--ink-950); font-size:14px; background:#fff; border:1px solid var(--line-strong); border-radius:9px; outline:none; transition:border-color .2s var(--ease),box-shadow .2s var(--ease); }
+    .auth-input:focus { border-color:var(--blue-500); box-shadow:0 0 0 3px rgba(52,121,227,.12); }
+    .auth-code-row { display:grid; grid-template-columns:minmax(0,1fr) 126px; gap:9px; }
+    .auth-send-code { height:46px; color:var(--blue-600); font-size:12px; font-weight:700; background:var(--blue-100); border:1px solid #cfe0fb; border-radius:9px; }
+    .auth-send-code:hover { background:#dceaff; }
+    .auth-send-code:disabled { color:var(--ink-500); cursor:not-allowed; background:var(--wash); border-color:var(--line); }
+    .auth-register-note { display:flex; gap:9px; padding:11px 12px; margin:-3px 0 16px; color:var(--ink-600); font-size:11.5px; line-height:1.65; background:#f5f8fd; border:1px solid var(--line); border-radius:9px; }
+    .auth-register-note i { display:grid; flex:none; width:18px; height:18px; place-items:center; color:#fff; font-size:10px; font-style:normal; font-weight:800; background:var(--green); border-radius:50%; }
+    .auth-consent { display:flex; align-items:flex-start; gap:8px; color:var(--ink-500); font-size:11px; line-height:1.6; }
+    .auth-consent input { width:15px; height:15px; margin:1px 0 0; accent-color:var(--blue-600); }
+    .auth-consent a { color:var(--blue-600); }
+    .auth-status { min-height:21px; margin:9px 0 5px; color:var(--red-600); font-size:11.5px; }
+    .auth-status.is-success { color:var(--green); }
+    .auth-submit { width:100%; }
+    .auth-switch-tip { margin:17px 0 0; color:var(--ink-500); font-size:11.5px; line-height:1.7; text-align:center; }
+    .auth-switch-link { padding:0; color:var(--blue-600); font-weight:700; background:transparent; }
+
+    .hero { position:relative; min-height:760px; overflow:hidden; color:#fff; background:linear-gradient(120deg,var(--navy-950) 0%,#0a2f70 58%,#124c98 100%); }
+    .hero::before { content:""; position:absolute; width:72%; height:90px; right:-8%; bottom:86px; background:linear-gradient(90deg,transparent,rgba(212,43,67,.82),rgba(230,80,73,.35),transparent); transform:rotate(-5deg); filter:blur(.2px); }
+    .hero::after { content:""; position:absolute; width:520px; height:520px; right:-180px; top:-160px; border:1px solid rgba(234,212,165,.2); border-radius:50%; box-shadow:0 0 0 90px rgba(255,255,255,.025),0 0 0 180px rgba(255,255,255,.018); }
+    .hero-grid-pattern { position:absolute; inset:0; opacity:.06; background-image:linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px); background-size:52px 52px; mask-image:linear-gradient(to right,#000,transparent 78%); }
+    .hero-inner { position:relative; z-index:2; display:grid; grid-template-columns:minmax(0,1.02fr) minmax(420px,.98fr); gap:74px; align-items:center; min-height:680px; padding:76px 0 58px; }
+    .hero-badge { display:inline-flex; align-items:center; gap:10px; padding:8px 13px; color:#eef5ff; font-size:12px; font-weight:700; letter-spacing:.1em; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:999px; }
+    .hero-badge i { width:6px; height:6px; background:var(--gold-300); border-radius:50%; box-shadow:0 0 0 5px rgba(234,212,165,.13); }
+    .hero h1 { max-width:680px; margin:27px 0 22px; font-family:STSong,"Songti SC",serif; font-size:clamp(45px,5.6vw,72px); font-weight:700; line-height:1.13; letter-spacing:-.045em; }
+    .hero h1 em { color:var(--gold-300); font-style:normal; }
+    .hero-copy { max-width:620px; margin:0; color:#c8d8f2; font-size:17px; line-height:2; }
+    .hero-actions { display:flex; gap:13px; flex-wrap:wrap; margin-top:34px; }
+    .hero-trust { display:flex; gap:28px; flex-wrap:wrap; margin-top:38px; color:#acc0df; font-size:12px; }
+    .hero-trust span { display:flex; align-items:center; gap:8px; }
+    .hero-trust i { display:grid; width:18px; height:18px; place-items:center; color:var(--navy-950); font-size:11px; font-style:normal; font-weight:900; background:var(--gold-300); border-radius:50%; }
+    .product-visual { position:relative; padding:18px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); border-radius:26px; box-shadow:var(--shadow-lg); backdrop-filter:blur(12px); transform:perspective(1200px) rotateY(-3deg) rotateX(1deg); }
+    .product-window { overflow:hidden; color:var(--ink-950); background:#f4f7fb; border:1px solid rgba(255,255,255,.64); border-radius:17px; }
+    .product-toolbar { display:flex; align-items:center; gap:6px; height:42px; padding:0 14px; color:var(--ink-500); font-size:10px; background:#fff; border-bottom:1px solid var(--line); }
+    .product-toolbar i { width:7px; height:7px; border-radius:50%; background:#cbd5e3; }
+    .product-toolbar strong { margin-left:7px; color:var(--navy-900); font-size:11px; }
+    .product-body { display:grid; grid-template-columns:74px minmax(0,1fr); min-height:385px; }
+    .product-side { padding:18px 10px; background:linear-gradient(180deg,var(--navy-900),var(--navy-950)); }
+    .product-side span { display:block; height:8px; margin:0 4px 17px; background:rgba(255,255,255,.17); border-radius:5px; }
+    .product-side span.is-active { height:27px; margin-inline:0; background:rgba(60,126,232,.48); border:1px solid rgba(255,255,255,.15); }
+    .product-main { padding:20px; }
+    .product-title { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .product-title strong { color:var(--navy-950); font-size:14px; }
+    .product-title span { color:var(--ink-500); font-size:9px; }
+    .mini-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .mini-kpi { padding:10px; background:#fff; border:1px solid var(--line); border-radius:9px; }
+    .mini-kpi span { display:block; color:var(--ink-500); font-size:8px; }
+    .mini-kpi strong { display:block; margin-top:4px; color:var(--navy-900); font-size:15px; }
+    .mini-chart { margin-top:10px; padding:13px; background:#fff; border:1px solid var(--line); border-radius:10px; }
+    .mini-chart-head { display:flex; justify-content:space-between; color:var(--ink-500); font-size:8px; }
+    .bar-chart { display:flex; height:104px; align-items:flex-end; gap:11px; margin-top:14px; padding:0 5px 15px; border-bottom:1px solid var(--line); background:repeating-linear-gradient(to bottom,transparent 0,transparent 25px,#edf1f7 26px); }
+    .bar-chart i { flex:1; min-width:10px; height:var(--bar); background:linear-gradient(180deg,#5f96ed,var(--blue-600)); border-radius:4px 4px 1px 1px; box-shadow:0 4px 10px rgba(31,102,209,.14); }
+    .mini-list { display:grid; gap:7px; margin-top:10px; }
+    .mini-row { display:grid; grid-template-columns:74px minmax(0,1fr) 28px; gap:7px; align-items:center; color:var(--ink-600); font-size:7px; }
+    .mini-progress { height:5px; overflow:hidden; background:var(--wash); border-radius:99px; }
+    .mini-progress i { display:block; width:var(--progress); height:100%; background:var(--green); border-radius:inherit; }
+    .product-float { position:absolute; right:-28px; bottom:38px; width:176px; padding:14px; color:var(--ink-950); background:#fff; border:1px solid var(--line); border-radius:13px; box-shadow:0 18px 40px rgba(6,27,70,.2); }
+    .product-float span { color:var(--ink-500); font-size:9px; }
+    .product-float strong { display:block; margin:5px 0 8px; color:var(--navy-800); font-size:22px; }
+    .float-progress { height:6px; overflow:hidden; background:var(--wash); border-radius:99px; }
+    .float-progress i { display:block; width:77.2%; height:100%; background:linear-gradient(90deg,var(--blue-500),var(--green)); }
+    .hero-metrics { position:relative; z-index:3; display:grid; grid-template-columns:repeat(4,1fr); margin-top:-80px; color:var(--ink-950); background:#fff; border:1px solid var(--line); border-radius:17px; box-shadow:0 22px 52px rgba(6,27,70,.13); }
+    .hero-metric { position:relative; padding:24px 28px; }
+    .hero-metric + .hero-metric::before { content:""; position:absolute; top:24px; bottom:24px; left:0; width:1px; background:var(--line); }
+    .hero-metric strong { display:block; color:var(--navy-900); font-size:28px; }
+    .hero-metric span { display:block; margin-top:7px; color:var(--ink-500); font-size:12px; }
+
+    .authority { padding:122px 0 68px; }
+    .authority-inner { display:flex; align-items:center; justify-content:center; gap:28px; color:var(--ink-500); font-size:12px; letter-spacing:.08em; }
+    .authority-line { width:80px; height:1px; background:linear-gradient(90deg,transparent,var(--gold-500)); }
+    .authority-line:last-child { transform:rotate(180deg); }
+    .authority strong { color:var(--navy-800); font-size:14px; }
+
+    .feature-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .feature-card { position:relative; min-height:260px; padding:30px; overflow:hidden; background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s var(--ease); }
+    .feature-card:hover { border-color:#b8cbea; box-shadow:0 20px 45px rgba(9,37,88,.1); transform:translateY(-5px); }
+    .feature-number { color:#d3deed; font-family:Georgia,serif; font-size:13px; font-weight:700; }
+    .feature-icon { display:grid; width:48px; height:48px; margin:24px 0 20px; place-items:center; color:var(--blue-600); font-size:19px; font-weight:800; background:var(--blue-100); border-radius:13px; }
+    .feature-card:nth-child(3n+2) .feature-icon { color:var(--green); background:#e5f6ec; }
+    .feature-card:nth-child(3n+3) .feature-icon { color:var(--red-600); background:#fce9ec; }
+    .feature-card h3 { margin:0; color:var(--ink-950); font-size:19px; }
+    .feature-card p { margin:13px 0 0; color:var(--ink-600); font-size:13px; line-height:1.85; }
+    .feature-card::after { content:""; position:absolute; right:-30px; bottom:-45px; width:110px; height:110px; border:1px solid var(--line); border-radius:50%; }
+
+    .advantage-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:76px; align-items:center; }
+    .advantage-panel { position:relative; min-height:570px; padding:44px; overflow:hidden; color:#fff; background:linear-gradient(145deg,var(--navy-900),var(--navy-950)); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); }
+    .advantage-panel::before { content:""; position:absolute; width:370px; height:370px; right:-190px; top:-150px; border:1px solid rgba(234,212,165,.25); border-radius:50%; box-shadow:0 0 0 70px rgba(255,255,255,.025); }
+    .advantage-quote { position:relative; max-width:470px; margin:0; font-family:STSong,"Songti SC",serif; font-size:clamp(29px,3.3vw,44px); line-height:1.45; }
+    .advantage-quote em { color:var(--gold-300); font-style:normal; }
+    .advantage-data { position:absolute; right:44px; bottom:44px; left:44px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .advantage-data div { padding:18px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:12px; }
+    .advantage-data strong { display:block; color:var(--gold-300); font-size:25px; }
+    .advantage-data span { display:block; margin-top:5px; color:#b9cbe8; font-size:11px; }
+    .advantage-list { display:grid; gap:10px; }
+    .advantage-item { display:grid; grid-template-columns:56px minmax(0,1fr); gap:20px; padding:23px 0; border-bottom:1px solid var(--line); }
+    .advantage-item:first-child { padding-top:0; }
+    .advantage-item:last-child { border-bottom:0; }
+    .advantage-index { color:var(--red-500); font-family:Georgia,serif; font-size:14px; font-weight:700; letter-spacing:.08em; }
+    .advantage-item h3 { margin:0; color:var(--ink-950); font-size:20px; }
+    .advantage-item p { margin:9px 0 0; color:var(--ink-600); font-size:13.5px; line-height:1.85; }
+
+    .process { padding-bottom:32px; }
+    .process-track { display:grid; grid-template-columns:repeat(5,1fr); counter-reset:steps; }
+    .process-step { position:relative; padding:0 22px; text-align:center; }
+    .process-step::after { content:""; position:absolute; z-index:0; top:29px; left:50%; width:100%; height:1px; background:linear-gradient(90deg,var(--blue-500),var(--line-strong)); }
+    .process-step:last-child::after { display:none; }
+    .process-circle { position:relative; z-index:1; display:grid; width:58px; height:58px; margin:0 auto 18px; place-items:center; color:#fff; font-family:Georgia,serif; font-size:15px; background:var(--navy-800); border:7px solid #eef4fd; border-radius:50%; }
+    .process-step h3 { margin:0; color:var(--ink-950); font-size:15px; }
+    .process-step p { margin:8px 0 0; color:var(--ink-500); font-size:11.5px; line-height:1.7; }
+
+    .pricing-intro { max-width:770px; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:54px; }
+    .price-card { position:relative; display:flex; flex-direction:column; min-height:690px; padding:38px; color:var(--ink-950); background:#fff; border:1px solid var(--line-strong); border-radius:20px; box-shadow:var(--shadow-sm); }
+    .price-card.is-featured { border:2px solid var(--blue-500); box-shadow:0 30px 70px rgba(13,55,125,.14); }
+    .price-ribbon { position:absolute; top:22px; right:-8px; padding:7px 18px; color:#fff; font-size:11px; font-weight:700; background:linear-gradient(90deg,var(--red-600),var(--red-500)); border-radius:5px 0 0 5px; box-shadow:0 7px 16px rgba(201,43,67,.2); }
+    .price-ribbon::after { content:""; position:absolute; right:0; bottom:-7px; border-top:7px solid #8d1930; border-right:7px solid transparent; }
+    .price-eyebrow { color:var(--blue-600); font-size:12px; font-weight:800; letter-spacing:.14em; }
+    .price-card h3 { margin:10px 0 0; font-size:27px; }
+    .price-desc { min-height:48px; margin:12px 0 0; color:var(--ink-600); font-size:13px; line-height:1.75; }
+    .price { display:flex; align-items:flex-end; gap:7px; margin:26px 0 23px; }
+    .price strong { color:var(--navy-900); font-family:Arial,sans-serif; font-size:50px; line-height:1; letter-spacing:-.04em; }
+    .price span { padding-bottom:5px; color:var(--ink-500); font-size:13px; }
+    .price-divider { height:1px; background:var(--line); }
+    .price-list { display:grid; gap:13px; margin:25px 0 32px; padding:0; list-style:none; }
+    .price-list li { display:grid; grid-template-columns:20px minmax(0,1fr); gap:10px; color:var(--ink-600); font-size:13px; line-height:1.55; }
+    .price-list li::before { content:"✓"; display:grid; width:18px; height:18px; place-items:center; color:var(--green); font-size:11px; font-weight:900; background:#e5f6ec; border-radius:50%; }
+    .price-list strong { color:var(--ink-950); }
+    .price-card .button { width:100%; margin-top:auto; }
+    .pricing-note { margin:24px 0 0; color:var(--ink-500); font-size:11.5px; line-height:1.8; text-align:center; }
+
+    .about-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:82px; align-items:center; }
+    .about-copy p { color:#c7d7f2; font-size:15px; line-height:2; }
+    .about-values { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .about-value { min-height:160px; padding:24px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13); border-radius:14px; }
+    .about-value strong { display:block; color:var(--gold-300); font-family:STSong,"Songti SC",serif; font-size:21px; }
+    .about-value span { display:block; margin-top:12px; color:#b9cbe8; font-size:12px; line-height:1.75; }
+
+    .help-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:64px; align-items:start; }
+    .help-contact { padding:34px; color:#fff; background:linear-gradient(145deg,var(--navy-800),var(--navy-950)); border-radius:18px; }
+    .help-contact h3 { margin:0; font-size:25px; }
+    .help-contact p { margin:14px 0 25px; color:#c6d6ef; font-size:13px; line-height:1.8; }
+    .help-facts { display:grid; gap:12px; margin-top:28px; }
+    .help-fact { display:flex; align-items:center; gap:12px; color:#c6d6ef; font-size:12px; }
+    .help-fact i { display:grid; width:30px; height:30px; place-items:center; color:var(--gold-300); font-style:normal; background:rgba(255,255,255,.08); border-radius:8px; }
+    .faq-list { display:grid; gap:10px; }
+    .faq { background:#fff; border:1px solid var(--line); border-radius:12px; }
+    .faq summary { position:relative; padding:20px 52px 20px 22px; color:var(--ink-950); font-size:14px; font-weight:700; cursor:pointer; list-style:none; }
+    .faq summary::-webkit-details-marker { display:none; }
+    .faq summary::after { content:"+"; position:absolute; right:21px; top:17px; color:var(--blue-600); font-size:22px; font-weight:400; transition:transform .2s var(--ease); }
+    .faq[open] summary::after { transform:rotate(45deg); }
+    .faq p { margin:0; padding:0 22px 21px; color:var(--ink-600); font-size:13px; line-height:1.85; }
+
+    .final-cta { position:relative; padding:82px 0; overflow:hidden; color:#fff; background:linear-gradient(110deg,var(--navy-950),var(--navy-800)); }
+    .final-cta::before { content:""; position:absolute; width:56%; height:54px; right:-8%; bottom:34px; background:linear-gradient(90deg,transparent,rgba(223,64,84,.8),transparent); transform:rotate(-4deg); }
+    .final-cta-inner { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:36px; }
+    .final-cta h2 { max-width:760px; margin:0; font-family:STSong,"Songti SC",serif; font-size:clamp(30px,4.3vw,48px); line-height:1.35; }
+    .final-cta p { margin:12px 0 0; color:#bbcae4; font-size:14px; }
+    .final-cta-actions { display:flex; gap:12px; flex-shrink:0; }
+
+    .site-footer { color:#9db0cf; background:#06183e; }
+    .footer-main { display:grid; grid-template-columns:1.25fr repeat(3,.75fr); gap:56px; padding:60px 0 42px; }
+    .footer-brand .brand-sub { color:#7f96bc; }
+    .footer-brand p { max-width:340px; margin:20px 0 0; font-size:12px; line-height:1.9; }
+    .footer-col h3 { margin:0 0 18px; color:#fff; font-size:13px; }
+    .footer-col a { display:block; width:max-content; margin:11px 0; font-size:12px; }
+    .footer-col a:hover { color:#fff; }
+    .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 0 26px; font-size:10.5px; border-top:1px solid rgba(255,255,255,.09); }
+    .footer-bottom span:last-child { letter-spacing:.08em; }
+
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    .reveal.is-visible { opacity:1; transform:none; }
+    :focus-visible { outline:3px solid rgba(52,121,227,.45); outline-offset:3px; }
+
+    @media (max-width:1080px) {
+      .site-nav a { padding-inline:11px; }
+      .header-actions { margin-left:8px; }
+      .hero-inner { grid-template-columns:1fr 440px; gap:34px; }
+      .feature-grid { grid-template-columns:repeat(2,1fr); }
+      .advantage-grid { gap:46px; }
+      .footer-main { grid-template-columns:1.3fr repeat(3,.7fr); gap:28px; }
+    }
+    @media (max-width:900px) {
+      .container { width:min(var(--max),calc(100% - 32px)); }
+      .section { padding:84px 0; }
+      .menu-toggle { display:block; margin-left:auto; }
+      .site-nav { position:fixed; top:84px; right:0; left:0; display:none; align-items:stretch; flex-direction:column; gap:0; padding:12px 16px 24px; background:var(--navy-950); border-bottom:1px solid rgba(255,255,255,.1); box-shadow:0 25px 45px rgba(6,27,70,.3); }
+      .site-nav.is-open { display:flex; }
+      .site-nav a { padding:14px 10px; }
+      .site-nav a::after { display:none; }
+      .header-actions .button-primary { display:none; }
+      .header-actions { margin-left:10px; }
+      .hero { min-height:0; }
+      .hero-inner { grid-template-columns:1fr; padding:82px 0 130px; }
+      .hero-copy { max-width:700px; }
+      .product-visual { max-width:620px; margin-inline:auto; transform:none; }
+      .hero-metrics { grid-template-columns:repeat(2,1fr); margin-top:-72px; }
+      .hero-metric:nth-child(3)::before { display:none; }
+      .authority { padding-top:108px; }
+      .section-head { align-items:flex-start; flex-direction:column; }
+      .advantage-grid,.about-grid,.help-grid { grid-template-columns:1fr; }
+      .advantage-panel { min-height:500px; }
+      .process-track { grid-template-columns:1fr; gap:0; }
+      .process-step { display:grid; grid-template-columns:58px 1fr; column-gap:18px; padding:0 0 24px; text-align:left; }
+      .process-step::after { top:58px; left:29px; width:1px; height:calc(100% - 34px); background:linear-gradient(var(--blue-500),var(--line-strong)); }
+      .process-circle { grid-row:1 / span 2; margin:0; }
+      .process-step h3 { align-self:end; }
+      .pricing-grid { gap:16px; }
+      .price-card { padding:30px; }
+      .final-cta-inner { align-items:flex-start; flex-direction:column; }
+      .footer-main { grid-template-columns:1fr 1fr; }
+      .footer-brand { grid-column:1 / -1; }
+    }
+    @media (max-width:640px) {
+      .authority-bar { height:4px; }
+      .site-header { top:4px; }
+      .header-inner { min-height:70px; }
+      .brand-emblem { width:39px; height:39px; }
+      .brand-name { font-size:14px; }
+      .brand-sub { display:none; }
+      .header-actions { display:none; }
+      .mobile-auth-button { display:flex; }
+      .site-nav { top:74px; }
+      .hero-inner { padding:65px 0 112px; }
+      .hero h1 { font-size:42px; }
+      .hero-copy { font-size:15px; }
+      .hero-actions .button { width:100%; }
+      .hero-trust { gap:14px; flex-direction:column; }
+      .product-visual { padding:9px; border-radius:18px; }
+      .product-body { grid-template-columns:52px minmax(0,1fr); min-height:315px; }
+      .product-main { padding:12px; }
+      .product-side { padding-inline:7px; }
+      .mini-kpis { grid-template-columns:repeat(2,1fr); }
+      .mini-kpi:last-child { display:none; }
+      .product-float { right:-8px; bottom:18px; width:145px; }
+      .hero-metrics { grid-template-columns:1fr 1fr; }
+      .hero-metric { padding:19px; }
+      .hero-metric strong { font-size:22px; }
+      .hero-metric:nth-child(odd)::before { display:none; }
+      .authority-inner { gap:12px; text-align:center; }
+      .authority-line { width:28px; }
+      .feature-grid,.pricing-grid,.about-values { grid-template-columns:1fr; }
+      .feature-card { min-height:0; }
+      .advantage-panel { min-height:560px; padding:30px; }
+      .advantage-data { right:30px; bottom:30px; left:30px; grid-template-columns:1fr; }
+      .price-card { min-height:0; padding:28px 24px; }
+      .price-desc { min-height:0; }
+      .price strong { font-size:43px; }
+      .help-contact { padding:28px 24px; }
+      .final-cta-actions { width:100%; flex-direction:column; }
+      .final-cta-actions .button { width:100%; }
+      .footer-main { grid-template-columns:1fr 1fr; gap:32px 20px; }
+      .footer-bottom { align-items:flex-start; flex-direction:column; }
+      .auth-modal { padding:12px; }
+      .auth-dialog-head { padding:24px 22px 20px; }
+      .auth-dialog-body { padding:22px 20px 24px; }
+      .auth-code-row { grid-template-columns:minmax(0,1fr) 112px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+      .reveal { opacity:1; transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="authority-bar"></div>
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="全国调研问卷平台首页">
+        <svg class="brand-emblem" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="22" fill="none" stroke="#fff" stroke-width="1.6"/>
+          <circle cx="24" cy="24" r="18.5" fill="none" stroke="#d8b878" stroke-width=".9"/>
+          <path d="M24 10l10 4v9c0 7-4.4 11.6-10 14-5.6-2.4-10-7-10-14v-9Z" fill="none" stroke="#fff" stroke-width="1.7"/>
+          <path d="M19 19h10M19 23.5h10M19 28h6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <span><span class="brand-name">全国调研问卷平台</span><span class="brand-sub">NATIONAL PUBLIC SURVEY PLATFORM</span></span>
+      </a>
+      <nav class="site-nav" id="siteNav" aria-label="主导航">
+        <a href="#home" aria-current="page">首页</a>
+        <a href="users.html">调研平台</a>
+        <a href="#pricing">价格</a>
+        <a href="#about">关于我们</a>
+        <a href="#help">帮助中心</a>
+        <button class="mobile-auth-button" id="mobileLoginRegisterBtn" type="button">登录 / 注册</button>
+      </nav>
+      <div class="header-actions">
+        <button class="button button-light" id="loginRegisterBtn" type="button">登录 / 注册</button>
+        <a class="button button-primary" href="users.html">进入平台 <span aria-hidden="true">→</span></a>
+      </div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="hero-grid-pattern" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-content reveal is-visible">
+          <span class="hero-badge"><i></i>面向企业与研究机构的一体化调研平台</span>
+          <h1>让每一次调研，成为<em>可信决策</em>的依据</h1>
+          <p class="hero-copy">从问卷设计、内容审核、通讯录协作、发送任务到答卷回收与分析，以标准化流程和企业级能力，帮助组织更高效地获得真实、完整、可用的数据。</p>
+          <div class="hero-actions">
+            <a class="button button-gold" href="users.html">立即进入调研平台 <span aria-hidden="true">→</span></a>
+            <a class="button button-ghost" href="#features">了解平台能力</a>
+          </div>
+          <div class="hero-trust" aria-label="平台保障">
+            <span><i>✓</i>标准化审核流程</span><span><i>✓</i>全链路数据监测</span><span><i>✓</i>企业级权限管理</span>
+          </div>
+        </div>
+        <div class="product-visual reveal is-visible" aria-label="调研平台数据工作台界面示意">
+          <div class="product-window">
+            <div class="product-toolbar"><i></i><i></i><i></i><strong>全国调研问卷平台 · 数据工作台</strong></div>
+            <div class="product-body">
+              <div class="product-side" aria-hidden="true"><span class="is-active"></span><span></span><span></span><span></span></div>
+              <div class="product-main">
+                <div class="product-title"><strong>整体数据概览</strong><span>更新至 2026-07-11 09:00</span></div>
+                <div class="mini-kpis"><div class="mini-kpi"><span>进行中调研</span><strong>58</strong></div><div class="mini-kpi"><span>有效答卷</span><strong>178,286</strong></div><div class="mini-kpi"><span>平均完成率</span><strong>82.7%</strong></div></div>
+                <div class="mini-chart"><div class="mini-chart-head"><strong>发送任务执行情况</strong><span>近 7 天</span></div><div class="bar-chart" aria-hidden="true"><i style="--bar:46%"></i><i style="--bar:52%"></i><i style="--bar:64%"></i><i style="--bar:58%"></i><i style="--bar:74%"></i><i style="--bar:82%"></i><i style="--bar:95%"></i></div></div>
+                <div class="mini-list"><div class="mini-row"><span>问卷审核率</span><span class="mini-progress"><i style="--progress:91.8%"></i></span><strong>91.8%</strong></div><div class="mini-row"><span>平均触达率</span><span class="mini-progress"><i style="--progress:88.4%"></i></span><strong>88.4%</strong></div><div class="mini-row"><span>答卷有效率</span><span class="mini-progress"><i style="--progress:95.6%"></i></span><strong>95.6%</strong></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="product-float"><span>通讯录成员</span><strong>386</strong><div class="float-progress"><i></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container hero-metrics reveal" aria-label="平台核心数据">
+      <div class="hero-metric"><strong>128</strong><span>平台调研项目</span></div>
+      <div class="hero-metric"><strong>31</strong><span>覆盖省区市</span></div>
+      <div class="hero-metric"><strong>4</strong><span>核心发送方式</span></div>
+      <div class="hero-metric"><strong>95.6%</strong><span>整体答卷有效率</span></div>
+    </div>
+
+    <section class="authority">
+      <div class="container authority-inner"><i class="authority-line"></i><strong>国务院发展研究中心信息中心 中国智库网</strong><i class="authority-line"></i></div>
+    </section>
+
+    <section class="section section-soft" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="section-kicker">PLATFORM CAPABILITIES</div><h2 class="section-title">覆盖调研全生命周期的专业能力</h2><p class="section-lead">将问卷、审核、企业通讯录、发送任务与答卷数据连接为统一流程，让每个环节可管理、可追踪、可复用。</p></div>
+          <p class="section-head-note">面向企业级调研场景设计，从快速发起到深度分析，在一个平台内完成全部核心工作。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal"><span class="feature-number">01</span><span class="feature-icon" aria-hidden="true">问</span><h3>专业问卷设计</h3><p>支持多种题型、移动端预览、内容审核与模板复用，规范问卷创建流程，减少设计偏差。</p></article>
+          <article class="feature-card reveal"><span class="feature-number">02</span><span class="feature-icon" aria-hidden="true">通</span><h3>企业通讯录</h3><p>维护部门、成员、手机号、邮箱、职位和备注，支持文件导入，并可在发送任务中快速选取联系人。</p></article>
+          <article class="feature-card reveal"><span class="feature-number">03</span><span class="feature-icon" aria-hidden="true">发</span><h3>多方式问卷发送</h3><p>统一管理短信、电子邮件、微信发送以及链接与二维码，支持立即发送和定时发送。</p></article>
+          <article class="feature-card reveal"><span class="feature-number">04</span><span class="feature-icon" aria-hidden="true">审</span><h3>规范内容审核</h3><p>通过待审核、已审核等状态与清晰的审核节点，确保问卷内容确认后再进入发送流程。</p></article>
+          <article class="feature-card reveal"><span class="feature-number">05</span><span class="feature-icon" aria-hidden="true">任</span><h3>发送任务管理</h3><p>按短信和邮件创建多个任务，集中查看待发送、执行中和已完成状态，并支持逐项或全部执行。</p></article>
+          <article class="feature-card reveal"><span class="feature-number">06</span><span class="feature-icon" aria-hidden="true">析</span><h3>答卷数据分析</h3><p>汇总核心指标、发送任务效果和各题选择占比，并可查看每位答题人的完整答题详情。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container advantage-grid">
+        <div class="advantage-panel reveal">
+          <p class="advantage-quote">不是简单地“收集答案”，而是建立一套<em>可信的数据生产体系</em>。</p>
+          <div class="advantage-data"><div><strong>82.7%</strong><span>平台平均答卷完成率</span></div><div><strong>7×24</strong><span>调研运行状态持续监测</span></div></div>
+        </div>
+        <div>
+          <div class="section-kicker">CORE ADVANTAGES</div>
+          <h2 class="section-title">权威、完整、高效，是平台的核心价值</h2>
+          <div class="advantage-list">
+            <article class="advantage-item reveal"><span class="advantage-index">A / 01</span><div><h3>标准统一，结果更加可信</h3><p>将问卷审核、任务发送、答卷回收与结果分析纳入统一标准，保证调研过程有依据、结果可复核。</p></div></article>
+            <article class="advantage-item reveal"><span class="advantage-index">A / 02</span><div><h3>资源沉淀，工作持续复用</h3><p>沉淀问卷内容、企业通讯录和历史发送记录，降低后续项目的准备成本，让团队经验持续积累。</p></div></article>
+            <article class="advantage-item reveal"><span class="advantage-index">A / 03</span><div><h3>数据贯通，决策更加及时</h3><p>实时汇总任务发送、触达与答卷回收情况，快速发现进度偏差并调整后续发送计划。</p></div></article>
+            <article class="advantage-item reveal"><span class="advantage-index">A / 04</span><div><h3>权限清晰，适合企业协作</h3><p>围绕成员、部门、审核和操作权限组织协作，使不同角色各司其职，关键动作全程可控。</p></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft process">
+      <div class="container">
+        <div class="section-head reveal"><div><div class="section-kicker">STANDARD WORKFLOW</div><h2 class="section-title">五个步骤，完成一次规范调研</h2></div><p class="section-head-note">清晰的步骤编排降低协作成本，也让每个项目都能够被快速复制和持续优化。</p></div>
+        <div class="process-track">
+          <article class="process-step reveal"><span class="process-circle">01</span><h3>创建调研</h3><p>设置标题、目标与截止时间</p></article>
+          <article class="process-step reveal"><span class="process-circle">02</span><h3>编辑问卷</h3><p>设计题目并提交内容审核</p></article>
+          <article class="process-step reveal"><span class="process-circle">03</span><h3>提交审核</h3><p>确认问卷内容并完成审核</p></article>
+          <article class="process-step reveal"><span class="process-circle">04</span><h3>配置发送</h3><p>创建任务并设置发送方式</p></article>
+          <article class="process-step reveal"><span class="process-circle">05</span><h3>分析结果</h3><p>监测回收并形成洞察</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="pricing-intro reveal"><div class="section-kicker">ENTERPRISE PRICING</div><h2 class="section-title">按企业调研规模，选择合适的能力套餐</h2><p class="section-lead">两档套餐均面向企业用户，覆盖调研创建、问卷管理、企业通讯录、任务发送和答卷分析。额度按年度计算，可根据实际业务规模升级。</p></div>
+        <div class="pricing-grid">
+          <article class="price-card reveal">
+            <span class="price-eyebrow">ENTERPRISE STANDARD</span><h3>企业标准版</h3><p class="price-desc">适合常态化开展问卷调研的企业团队。</p>
+            <div class="price"><strong>¥2,599</strong><span>/ 年</span></div><div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span>纯净问卷：无广告、无跳转、无促销</span></li>
+              <li><span>每天最多创建 <strong>100 份问卷</strong></span></li>
+              <li><span>每份问卷最多可回收 <strong>10 万份答卷</strong><sup>*</sup></span></li>
+              <li><span>通讯录最多可录入 <strong>500 人</strong><sup>*</sup></span></li>
+              <li><span>支持基础题型及部分高级题型，共 <strong>50+</strong> 题型</span></li>
+              <li><span>并发规格 <strong>200 人次/秒</strong></span></li>
+              <li><span>支持短信、邮件、微信分享、二维码分享分发</span></li>
+              <li><span>赠送 <strong>6 次</strong>人工问卷录入服务</span></li>
+              <li><span>客服中心在线服务</span></li>
+            </ul>
+            <a class="button button-light" href="users.html">选择标准版</a>
+          </article>
+          <article class="price-card is-featured reveal">
+            <span class="price-ribbon">推荐企业选择</span><span class="price-eyebrow">ENTERPRISE PROFESSIONAL</span><h3>企业专业版</h3><p class="price-desc">适合多部门协同、高频发送与专业化分析需求的企业。</p>
+            <div class="price"><strong>¥12,599</strong><span>/ 年</span></div><div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span>纯净问卷：无广告、无跳转、无促销</span></li>
+              <li><span>每天创建问卷数 <strong>无限制</strong></span></li>
+              <li><span>每份问卷最多可回收 <strong>20 万份答卷</strong><sup>*</sup></span></li>
+              <li><span>通讯录最多可录入 <strong>1,000 人</strong><sup>*</sup></span></li>
+              <li><span>支持全部题型 <strong>90+</strong>，覆盖企业全面需求</span></li>
+              <li><span>并发规格 <strong>500 人次/秒</strong></span></li>
+              <li><span>支持定制企业问卷外观</span></li>
+              <li><span>支持子账户管理，赠送 <strong>5 个</strong>子账户及多级权限分配</span></li>
+              <li><span>支持定制短信标签、邮件内容、分享标题与 Logo</span></li>
+              <li><span>支持 <strong>50 份</strong>分析报告（满意度调研、敬业度调研）</span></li>
+              <li><span>赠送 <strong>12 次</strong>人工问卷录入服务</span></li>
+              <li><span>客户经理一对一专业服务</span></li>
+            </ul>
+            <a class="button button-primary" href="users.html">选择专业版</a>
+          </article>
+        </div>
+        <p class="pricing-note">* 标注项支持按实际业务需求付费增配。</p>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="about">
+      <div class="container about-grid">
+        <div class="about-copy reveal"><div class="section-kicker">ABOUT THE PLATFORM</div><h2 class="section-title">以可信数据服务公共研究与企业决策</h2><p>全国调研问卷平台聚焦调研工作的标准化、数字化与资产化，为企业、研究机构和专业团队提供稳定、清晰、可持续的调研能力。</p><p>我们相信，高质量的决策首先来自高质量的数据。平台以完整流程连接问卷内容、企业通讯录、发送任务和答卷分析，让每份数据都能够回溯来源、理解背景并产生长期价值。</p><a class="button button-ghost" href="users.html">进入平台了解更多</a></div>
+        <div class="about-values">
+          <article class="about-value reveal"><strong>专业</strong><span>围绕真实调研场景打磨流程与分析能力。</span></article>
+          <article class="about-value reveal"><strong>可信</strong><span>用标准审核与质量规则守护数据可靠性。</span></article>
+          <article class="about-value reveal"><strong>开放</strong><span>连接多种发送方式与企业通讯录，适应不同业务需求。</span></article>
+          <article class="about-value reveal"><strong>长期</strong><span>沉淀问卷、任务记录和答卷数据，形成企业调研资产。</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="help">
+      <div class="container help-grid">
+        <div class="help-contact reveal"><h3>帮助中心</h3><p>从首次创建问卷到查看数据分析，我们为企业用户提供清晰的使用指引与服务支持。</p><a class="button button-gold" href="users.html">进入平台开始使用</a><div class="help-facts"><div class="help-fact"><i>文</i>完整产品操作说明</div><div class="help-fact"><i>答</i>常见问题快速解答</div><div class="help-fact"><i>服</i>企业用户服务支持</div></div></div>
+        <div class="faq-list reveal">
+          <details class="faq" open><summary>标准版和专业版应该如何选择？</summary><p>若团队规模较小、调研频率适中，可从企业标准版开始；如涉及多部门协作、高频发送、更大通讯录容量或更高答卷额度，建议选择企业专业版。</p></details>
+          <details class="faq"><summary>平台支持哪些发送方式？</summary><p>平台支持短信、电子邮件、微信发送以及链接与二维码分享。短信和邮件可创建多个发送任务，并支持立即发送或定时发送。</p></details>
+          <details class="faq"><summary>是否可以管理企业通讯录？</summary><p>可以。企业可维护部门、姓名、手机号、邮箱、职位和备注，支持文件批量导入，并可在短信或邮件任务中直接选择联系人。</p></details>
+          <details class="faq"><summary>数据分析包含哪些内容？</summary><p>包括总发送量、触达量、回收量、有效答卷量、任务发送效果、各题目选择占比、简答题汇总，以及每位答题人的完整作答详情。</p></details>
+          <details class="faq"><summary>问卷发送前是否支持内容审核？</summary><p>支持。问卷可提交内容审核，审核通过后即可配置短信、邮件、微信或链接与二维码，并执行发送任务。</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container final-cta-inner"><div><h2>用一套完整的平台，开始下一次高质量调研</h2><p>从问卷到洞察，让团队更快获得真实、可信、可行动的数据。</p></div><div class="final-cta-actions"><a class="button button-gold" href="users.html">进入调研平台</a><a class="button button-ghost" href="#pricing">查看套餐价格</a></div></div>
+    </section>
+  </main>
+
+  <div class="auth-modal" id="authModal" hidden>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authDialogTitle" aria-describedby="authDialogDescription">
+      <header class="auth-dialog-head">
+        <button class="auth-close" id="authCloseBtn" type="button" aria-label="关闭登录注册弹窗">×</button>
+        <div class="auth-dialog-brand">
+          <svg class="brand-emblem" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="none" stroke="#fff" stroke-width="1.6"/>
+            <circle cx="24" cy="24" r="18.5" fill="none" stroke="#d8b878" stroke-width=".9"/>
+            <path d="M24 10l10 4v9c0 7-4.4 11.6-10 14-5.6-2.4-10-7-10-14v-9Z" fill="none" stroke="#fff" stroke-width="1.7"/>
+            <path d="M19 19h10M19 23.5h10M19 28h6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <span class="auth-dialog-brand-copy"><span class="auth-dialog-brand-name">全国调研问卷平台</span><span class="auth-dialog-brand-sub">NATIONAL PUBLIC SURVEY PLATFORM</span></span>
+        </div>
+        <h2 id="authDialogTitle">登录 / 注册</h2>
+        <p id="authDialogDescription">使用企业账号登录，首次使用可通过手机号验证自动注册。</p>
+      </header>
+      <div class="auth-dialog-body">
+        <div class="auth-tabs" role="tablist" aria-label="登录方式">
+          <button class="auth-tab" id="passwordLoginTab" type="button" role="tab" aria-selected="true" aria-controls="passwordLoginPane">密码登录</button>
+          <button class="auth-tab" id="codeLoginTab" type="button" role="tab" aria-selected="false" aria-controls="codeLoginPane">验证码登录</button>
+        </div>
+        <form id="authForm">
+          <label class="auth-field"><span class="auth-field-label">手机号码</span><input class="auth-input" id="authPhoneInput" type="tel" inputmode="numeric" autocomplete="tel" maxlength="11" pattern="1[3-9][0-9]{9}" placeholder="请输入 11 位手机号码" required></label>
+          <div id="passwordLoginPane" role="tabpanel" aria-labelledby="passwordLoginTab">
+            <label class="auth-field"><span class="auth-field-label">登录密码</span><input class="auth-input" id="authPasswordInput" type="password" autocomplete="current-password" minlength="6" maxlength="32" placeholder="请输入登录密码" required></label>
+          </div>
+          <div id="codeLoginPane" role="tabpanel" aria-labelledby="codeLoginTab" hidden>
+            <label class="auth-field"><span class="auth-field-label">短信验证码</span><span class="auth-code-row"><input class="auth-input" id="authCodeInput" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="请输入 6 位验证码"><button class="auth-send-code" id="authSendCodeBtn" type="button">发送验证码</button></span></label>
+            <div class="auth-register-note"><i>✓</i><span>手机号未注册时，验证成功后将自动创建企业用户账号，无需单独填写注册表。</span></div>
+          </div>
+          <label class="auth-consent"><input id="authConsentInput" type="checkbox" required><span>我已阅读并同意<a href="#help">《用户服务协议》</a>和<a href="#help">《隐私政策》</a></span></label>
+          <p class="auth-status" id="authStatus" role="status" aria-live="polite"></p>
+          <button class="button button-primary auth-submit" id="authSubmitBtn" type="submit">登录并进入平台</button>
+        </form>
+        <p class="auth-switch-tip" id="authSwitchTip"><span id="authSwitchLabel">没有账号？</span><button class="auth-switch-link" id="switchAuthModeBtn" type="button">使用验证码登录，即可自动注册</button></p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand"><a class="brand" href="#home" aria-label="全国调研问卷平台首页"><svg class="brand-emblem" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="24" cy="24" r="18.5" fill="none" stroke="#d8b878" stroke-width=".9"/><path d="M24 10l10 4v9c0 7-4.4 11.6-10 14-5.6-2.4-10-7-10-14v-9Z" fill="none" stroke="#fff" stroke-width="1.7"/><path d="M19 19h10M19 23.5h10M19 28h6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg><span><span class="brand-name">全国调研问卷平台</span><span class="brand-sub">NATIONAL PUBLIC SURVEY PLATFORM</span></span></a><p>面向企业与研究机构的专业调研数字化平台，让可信数据支撑科学决策。</p></div>
+      <div class="footer-col"><h3>平台</h3><a href="users.html">进入调研平台</a><a href="#features">平台能力</a><a href="#pricing">企业价格</a></div>
+      <div class="footer-col"><h3>支持</h3><a href="#help">帮助中心</a><a href="#help">常见问题</a><a href="#about">关于平台</a></div>
+      <div class="footer-col"><h3>企业服务</h3><a href="#pricing">标准版</a><a href="#pricing">专业版</a><a href="users.html">企业登录</a></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 全国调研问卷平台</span><span>国务院发展研究中心信息中心 中国智库网</span></div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
+    const siteHeader = document.getElementById('siteHeader');
+    const homeNav = siteNav.querySelector('a[href="#home"]');
+    const loginRegisterBtn = document.getElementById('loginRegisterBtn');
+    const mobileLoginRegisterBtn = document.getElementById('mobileLoginRegisterBtn');
+    const authModal = document.getElementById('authModal');
+    const authCloseBtn = document.getElementById('authCloseBtn');
+    const authForm = document.getElementById('authForm');
+    const authPhoneInput = document.getElementById('authPhoneInput');
+    const authPasswordInput = document.getElementById('authPasswordInput');
+    const authCodeInput = document.getElementById('authCodeInput');
+    const authConsentInput = document.getElementById('authConsentInput');
+    const authSendCodeBtn = document.getElementById('authSendCodeBtn');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const authStatus = document.getElementById('authStatus');
+    const passwordLoginTab = document.getElementById('passwordLoginTab');
+    const codeLoginTab = document.getElementById('codeLoginTab');
+    const passwordLoginPane = document.getElementById('passwordLoginPane');
+    const codeLoginPane = document.getElementById('codeLoginPane');
+    const authSwitchLabel = document.getElementById('authSwitchLabel');
+    const switchAuthModeBtn = document.getElementById('switchAuthModeBtn');
+    let authMode = 'password';
+    let authTrigger = null;
+    let authCodeCountdown = 0;
+    let authCodeTimer = null;
+
+    function closeMenu() {
+      siteNav.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', '打开导航菜单');
+      document.body.classList.remove('menu-open');
+    }
+
+    function setAuthStatus(message = '', success = false) {
+      authStatus.textContent = message;
+      authStatus.classList.toggle('is-success', success);
+    }
+
+    function setAuthMode(mode) {
+      authMode = mode;
+      const usesPassword = mode === 'password';
+      passwordLoginTab.setAttribute('aria-selected', String(usesPassword));
+      codeLoginTab.setAttribute('aria-selected', String(!usesPassword));
+      passwordLoginTab.tabIndex = usesPassword ? 0 : -1;
+      codeLoginTab.tabIndex = usesPassword ? -1 : 0;
+      passwordLoginPane.hidden = !usesPassword;
+      codeLoginPane.hidden = usesPassword;
+      authPasswordInput.required = usesPassword;
+      authCodeInput.required = !usesPassword;
+      authSubmitBtn.textContent = usesPassword ? '登录并进入平台' : '验证并登录 / 注册';
+      authSwitchLabel.textContent = usesPassword ? '没有账号？' : '已有账号？';
+      switchAuthModeBtn.textContent = usesPassword ? '使用验证码登录，即可自动注册' : '返回密码登录';
+      setAuthStatus();
+    }
+
+    function openAuthModal(trigger) {
+      authTrigger = trigger;
+      closeMenu();
+      setAuthMode('password');
+      authSubmitBtn.disabled = false;
+      authModal.hidden = false;
+      document.body.classList.add('modal-open');
+      requestAnimationFrame(() => authPhoneInput.focus());
+    }
+
+    function closeAuthModal() {
+      authModal.hidden = true;
+      document.body.classList.remove('modal-open');
+      setAuthStatus();
+      if (authTrigger?.isConnected) authTrigger.focus();
+    }
+
+    function validPhone() {
+      return /^1[3-9][0-9]{9}$/.test(authPhoneInput.value);
+    }
+
+    function beginCodeCountdown() {
+      clearInterval(authCodeTimer);
+      authCodeCountdown = 60;
+      authSendCodeBtn.disabled = true;
+      authSendCodeBtn.textContent = `${authCodeCountdown} 秒后重发`;
+      authCodeTimer = setInterval(() => {
+        authCodeCountdown -= 1;
+        authSendCodeBtn.textContent = authCodeCountdown > 0 ? `${authCodeCountdown} 秒后重发` : '重新发送';
+        if (authCodeCountdown > 0) return;
+        clearInterval(authCodeTimer);
+        authSendCodeBtn.disabled = false;
+      }, 1000);
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const open = !siteNav.classList.contains('is-open');
+      siteNav.classList.toggle('is-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
+      document.body.classList.toggle('menu-open', open);
+    });
+
+    siteNav.addEventListener('click', event => {
+      if (event.target.closest('a')) closeMenu();
+    });
+
+    loginRegisterBtn.addEventListener('click', () => openAuthModal(loginRegisterBtn));
+    mobileLoginRegisterBtn.addEventListener('click', () => openAuthModal(mobileLoginRegisterBtn));
+    authCloseBtn.addEventListener('click', closeAuthModal);
+    authModal.addEventListener('click', event => {
+      if (event.target === authModal) closeAuthModal();
+    });
+    passwordLoginTab.addEventListener('click', () => setAuthMode('password'));
+    codeLoginTab.addEventListener('click', () => setAuthMode('code'));
+    switchAuthModeBtn.addEventListener('click', () => {
+      const nextMode = authMode === 'password' ? 'code' : 'password';
+      setAuthMode(nextMode);
+      (nextMode === 'password' ? authPasswordInput : authCodeInput).focus();
+    });
+    authPhoneInput.addEventListener('input', () => {
+      authPhoneInput.value = authPhoneInput.value.replace(/[^0-9]/g, '').slice(0, 11);
+      setAuthStatus();
+    });
+    authCodeInput.addEventListener('input', () => {
+      authCodeInput.value = authCodeInput.value.replace(/[^0-9]/g, '').slice(0, 6);
+      setAuthStatus();
+    });
+    authSendCodeBtn.addEventListener('click', () => {
+      if (!validPhone()) {
+        setAuthStatus('请输入正确的 11 位手机号码');
+        authPhoneInput.focus();
+        return;
+      }
+      beginCodeCountdown();
+      setAuthStatus('验证码已发送，请注意查收', true);
+      authCodeInput.focus();
+    });
+    authForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!validPhone()) {
+        setAuthStatus('请输入正确的 11 位手机号码');
+        authPhoneInput.focus();
+        return;
+      }
+      if (!authForm.reportValidity()) return;
+      if (!authConsentInput.checked) {
+        setAuthStatus('请先阅读并同意用户服务协议和隐私政策');
+        return;
+      }
+      authSubmitBtn.disabled = true;
+      setAuthStatus(authMode === 'password' ? '登录成功，正在进入平台…' : '验证成功，正在登录或创建账号…', true);
+      setTimeout(() => { window.location.href = 'users.html'; }, 700);
+    });
+
+    window.addEventListener('scroll', () => {
+      siteHeader.classList.toggle('is-scrolled', window.scrollY > 12);
+      if (window.scrollY < 520) homeNav.setAttribute('aria-current', 'page');
+      else homeNav.removeAttribute('aria-current');
+    }, { passive:true });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) closeMenu();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !authModal.hidden) closeAuthModal();
+    });
+
+    const revealObserver = 'IntersectionObserver' in window
+      ? new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          });
+        }, { threshold:.12 })
+      : null;
+
+    document.querySelectorAll('.reveal').forEach(element => {
+      if (revealObserver) revealObserver.observe(element);
+      else element.classList.add('is-visible');
+    });
+  </script>
+</body>
+</html>
