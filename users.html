@@ -2585,22 +2585,86 @@
     min-height: 0;
     overflow-y: auto;
     border-radius: 20px;
-    background: var(--wash);
+    background: var(--pv-bg, var(--wash));
+    font-family: var(--pv-font-family, inherit);
     scrollbar-width: none;
   }
   .phone-screen::-webkit-scrollbar { display: none; }
+  .phone-header {
+    display: flex;
+    align-items: center;
+    justify-content: var(--pv-header-justify, flex-start);
+    padding: 10px 14px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+  .phone-header[hidden], .phone-progress[hidden], .phone-footer[hidden] { display: none; }
+  .phone-header img { max-width: 132px; max-height: 30px; object-fit: contain; }
+  .phone-header .phone-logo-fallback {
+    padding: 4px 10px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 4px;
+    color: var(--ink-400);
+    font-size: 11px;
+  }
   .phone-cover {
     padding: 26px 18px 22px;
-    color: #fff;
-    background: var(--navy-800);
+    color: var(--pv-title-color, #fff);
+    background:
+      var(--pv-cover-image, none) center / cover no-repeat,
+      linear-gradient(135deg, var(--pv-cover-start, var(--navy-800)), var(--pv-cover-end, var(--navy-800)));
   }
   .phone-cover h3 {
     margin: 0;
-    font-size: 20px;
+    font-size: calc(var(--pv-font-size, 14px) + 6px);
     line-height: 1.45;
     overflow-wrap: anywhere;
   }
-  .phone-cover p { margin: 8px 0 0; color: #c6d5f2; font-size: 13px; }
+  .phone-cover p { margin: 8px 0 0; opacity: .8; font-size: calc(var(--pv-font-size, 14px) - 1px); }
+  .phone-progress {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px 0;
+  }
+  .phone-progress-track {
+    flex: 1;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--line);
+  }
+  .phone-progress-track i {
+    display: block;
+    width: var(--pv-progress-width, 35%);
+    height: 100%;
+    border-radius: 999px;
+    background: var(--pv-button, var(--navy-700));
+  }
+  .phone-progress span.phone-progress-text { color: var(--ink-500); font-size: 11px; white-space: nowrap; }
+  .phone-footer {
+    padding: 14px;
+    color: var(--ink-400);
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .phone-pager {
+    display: flex;
+    gap: 9px;
+    margin-top: 4px;
+  }
+  .phone-pager button {
+    flex: 1;
+    height: 37px;
+    border: 1px solid var(--pv-button, var(--navy-700));
+    border-radius: var(--r-sm);
+    color: var(--pv-button, var(--navy-700));
+    background: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
   .phone-questions { padding: 13px; }
   .phone-question {
     padding: 14px 13px;
@@ -2611,8 +2675,8 @@
   }
   .phone-question-title {
     margin-bottom: 12px;
-    color: var(--ink-900);
-    font-size: 14px;
+    color: var(--pv-question-color, var(--ink-900));
+    font-size: var(--pv-font-size, 14px);
     font-weight: 700;
     line-height: 1.55;
   }
@@ -2621,13 +2685,23 @@
     color: var(--red-500);
     font-style: normal;
   }
+  .phone-question-title small {
+    margin-left: 6px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: #e3edfd;
+    color: #2f6fe4;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
   .phone-option {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-top: 10px;
     color: var(--ink-700);
-    font-size: 13px;
+    font-size: calc(var(--pv-font-size, 14px) - 1px);
   }
   .phone-choice {
     width: 16px;
@@ -2652,8 +2726,8 @@
     margin-top: 4px;
     border-radius: var(--r-sm);
     color: #fff;
-    background: var(--navy-700);
-    font-size: 14px;
+    background: var(--pv-button, var(--navy-700));
+    font-size: var(--pv-font-size, 14px);
     font-weight: 700;
   }
   .ai-modal {
@@ -2722,6 +2796,164 @@
   .ai-prompt:focus {
     outline: none;
     border-color: var(--blue-500);
+  }
+  .ai-dialog.appearance-dialog { width: min(920px, 100%); }
+  .appearance-dialog .ai-dialog-body { max-height: calc(100vh - 220px); overflow: auto; }
+  .appearance-section, .setting-section { padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .appearance-section:last-child, .setting-section:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+  .appearance-section-head, .setting-section-head { margin: 0 0 13px; }
+  .appearance-section-head h3, .setting-section-head h3 { margin: 0; font-size: 15px; }
+  .appearance-section-head p, .setting-section-head p { margin: 5px 0 0; color: var(--ink-500); font-size: 12px; line-height: 1.6; }
+  .appearance-grid, .setting-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 13px;
+  }
+  .appearance-field, .setting-field { display: flex; flex-direction: column; gap: 7px; }
+  .appearance-field > span, .setting-field > span { color: var(--ink-700); font-size: 13px; font-weight: 700; }
+  .appearance-field input[type="text"],
+  .appearance-field input[type="url"],
+  .appearance-field select,
+  .setting-field input[type="text"],
+  .setting-field input[type="url"],
+  .setting-field input[type="password"],
+  .setting-field input[type="number"],
+  .setting-field input[type="datetime-local"],
+  .setting-field select {
+    width: 100%;
+    height: 37px;
+    padding: 0 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    color: var(--ink-900);
+    background: #fff;
+    font: inherit;
+    font-size: 13px;
+  }
+  .appearance-field input:focus, .appearance-field select:focus,
+  .setting-field input:focus, .setting-field select:focus, .setting-field textarea:focus { outline: none; border-color: var(--blue-500); }
+  .setting-field textarea {
+    width: 100%;
+    min-height: 84px;
+    resize: vertical;
+    padding: 10px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    color: var(--ink-900);
+    background: #fff;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .setting-field.is-wide { grid-column: 1 / -1; }
+  .setting-grid[hidden], .setting-field[hidden], .setting-limit-row[hidden] { display: none; }
+  .setting-radio-list { display: grid; gap: 9px; }
+  .setting-radio {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 13px;
+    border: 1.6px solid var(--line);
+    border-radius: var(--r-sm);
+    background: #fff;
+    cursor: pointer;
+  }
+  .setting-radio:hover { border-color: var(--blue-500); }
+  .setting-radio.is-selected { border-color: var(--blue-500); background: #fbfdff; }
+  .setting-radio input { margin-top: 3px; }
+  .setting-radio strong { display: block; color: var(--ink-900); font-size: 13px; }
+  .setting-radio span { color: var(--ink-500); font-size: 12px; line-height: 1.6; }
+  .setting-subpanel {
+    margin-top: 13px;
+    padding: 14px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--r-sm);
+    background: var(--wash);
+  }
+  .setting-subpanel[hidden] { display: none; }
+  .setting-limit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .setting-limit-row:last-child { border-bottom: 0; }
+  .setting-limit-copy strong { display: block; color: var(--ink-900); font-size: 13px; }
+  .setting-limit-copy span { color: var(--ink-500); font-size: 12px; }
+  .setting-limit-control { display: flex; align-items: center; gap: 9px; }
+  .setting-limit-control label { display: flex; align-items: center; gap: 6px; color: var(--ink-500); font-size: 12px; }
+  .setting-limit-control input[type="number"] { width: 82px; }
+  .appearance-color { display: flex; align-items: center; gap: 8px; }
+  .appearance-color input[type="color"] {
+    width: 42px;
+    height: 37px;
+    flex: none;
+    padding: 2px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    background: #fff;
+    cursor: pointer;
+  }
+  .appearance-theme-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+    gap: 11px;
+  }
+  .appearance-theme {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 9px;
+    border: 1.6px solid var(--line);
+    border-radius: var(--r-sm);
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+  }
+  .appearance-theme:hover { border-color: var(--blue-500); }
+  .appearance-theme.is-active { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(47,111,228,.12); }
+  .appearance-theme-swatch { height: 38px; border-radius: 5px; }
+  .appearance-theme-name { color: var(--ink-700); font-size: 12px; font-weight: 700; }
+  .appearance-switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .appearance-switch-row:last-child { border-bottom: 0; }
+  .appearance-switch-copy strong { display: block; color: var(--ink-900); font-size: 13px; }
+  .appearance-switch-copy span { color: var(--ink-500); font-size: 12px; }
+  .appearance-check, .setting-check { display: flex; align-items: center; gap: 8px; color: var(--ink-700); font-size: 13px; cursor: pointer; }
+  .appearance-dialog-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .appearance-foot-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ai-dialog.setting-dialog { width: min(860px, 100%); }
+  .setting-dialog .ai-dialog-body { max-height: calc(100vh - 220px); overflow: auto; }
+  .ai-dialog.text-import-dialog { width: min(720px, 100%); }
+  .text-import-dialog .ai-dialog-body { max-height: calc(100vh - 240px); overflow: auto; }
+  .text-import-dialog .ai-prompt { min-height: 220px; font-size: 13px; }
+  .text-import-summary {
+    margin-top: 14px;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    color: var(--ink-700);
+    background: var(--wash);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .text-import-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 13px;
+    color: var(--ink-700);
+    font-size: 13px;
+    cursor: pointer;
   }
   .ai-settings {
     display: grid;
@@ -4209,6 +4441,7 @@
           <div class="q-list-actions">
             <button class="btn btn-primary" id="createQuestionnaireBtn"><svg class="ic"><use href="#i-plus"/></svg>创建问卷模板</button>
             <button class="btn btn-ai" id="questionnaireAiGenerateBtn"><svg class="ic"><use href="#i-sparkles"/></svg>AI生成问卷模板<span class="ai-tag">AI</span></button>
+            <button class="btn btn-ghost" id="questionnaireTextImportBtn"><svg class="ic"><use href="#i-report"/></svg>从文本创建</button>
             <button class="btn btn-ghost" id="batchDeleteBtn" disabled><svg class="ic"><use href="#i-trash"/></svg>批量删除</button>
           </div>
         </div>
@@ -4238,6 +4471,9 @@
           </div>
           <div class="editor-actions">
             <button class="btn btn-ai" id="aiGenerateBtn"><svg class="ic"><use href="#i-sparkles"/></svg>AI生成问卷模板<span class="ai-tag">AI</span></button>
+            <button class="btn btn-ghost" id="appearanceBtn"><svg class="ic"><use href="#i-monitor"/></svg>外观设置</button>
+            <button class="btn btn-ghost" id="surveySettingBtn"><svg class="ic"><use href="#i-gear"/></svg>问卷设置</button>
+            <button class="btn btn-ghost" id="textImportBtn"><svg class="ic"><use href="#i-report"/></svg>从文本创建</button>
             <button class="btn btn-primary" id="saveQuestionnaireBtn"><svg class="ic"><use href="#i-draft"/></svg>保存</button>
             <button class="btn btn-ghost" id="cancelQuestionnaireBtn"><svg class="ic"><use href="#i-x"/></svg>取消</button>
           </div>
@@ -4430,12 +4666,18 @@
             <div class="phone-preview-wrap">
               <div class="phone-device">
                 <div class="phone-device-bar" aria-hidden="true"></div>
-                <div class="phone-screen">
-                  <div class="phone-cover">
+                <div class="phone-screen" id="phonePreviewScreen">
+                  <div class="phone-header" id="phonePreviewHeader" hidden></div>
+                  <div class="phone-cover" id="phonePreviewCover">
                     <h3 id="phonePreviewTitle">2026 用户满意度调查问卷</h3>
                     <p>请根据实际情况填写，感谢您的参与</p>
                   </div>
+                  <div class="phone-progress" id="phonePreviewProgress" hidden>
+                    <span class="phone-progress-track"><i></i></span>
+                    <span class="phone-progress-text" id="phonePreviewProgressText">0%</span>
+                  </div>
                   <div class="phone-questions" id="phonePreviewQuestions"></div>
+                  <div class="phone-footer" id="phonePreviewFooter" hidden></div>
                 </div>
               </div>
             </div>
@@ -4486,6 +4728,294 @@
           <span class="ai-generate-status" id="aiGenerateStatus" aria-live="polite"></span>
           <button class="btn btn-ghost" id="cancelAiGenerateBtn">取消</button>
           <button class="btn btn-primary" id="confirmAiGenerateBtn"><svg class="ic"><use href="#i-sparkles"/></svg>生成</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="ai-modal" id="surveySettingModal" hidden>
+      <section class="ai-dialog setting-dialog" role="dialog" aria-modal="true" aria-labelledby="surveySettingTitle">
+        <div class="ai-dialog-head">
+          <h2 class="ai-dialog-title" id="surveySettingTitle"><svg class="ic"><use href="#i-gear"/></svg>问卷设置</h2>
+          <button class="ai-close" id="closeSurveySettingModalBtn" aria-label="关闭"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="ai-dialog-body">
+          <section class="setting-section">
+            <div class="setting-section-head">
+              <h3>答题密码</h3>
+              <p>开启后，填写者需先通过身份校验才能打开问卷，可用于内部调研或一人一份的定向发放。</p>
+            </div>
+            <div class="setting-radio-list" id="qsPasswordModeList">
+              <label class="setting-radio"><input type="radio" name="qsPasswordMode" value="none" checked><span><strong>不设置密码</strong><span>任何获得问卷链接的人都可以直接填写</span></span></label>
+              <label class="setting-radio"><input type="radio" name="qsPasswordMode" value="single"><span><strong>单个密码</strong><span>所有填写者使用同一个密码打开问卷</span></span></label>
+              <label class="setting-radio"><input type="radio" name="qsPasswordMode" value="list"><span><strong>密码列表（一人一码）</strong><span>为每位填写者生成唯一密码，支持从 Excel 批量导入</span></span></label>
+              <label class="setting-radio"><input type="radio" name="qsPasswordMode" value="sms"><span><strong>短信验证码</strong><span>填写者需输入手机接收到的随机验证码后作答</span></span></label>
+            </div>
+            <div class="setting-subpanel" id="qsPasswordSinglePanel" hidden>
+              <div class="setting-grid">
+                <label class="setting-field"><span>问卷密码</span><input type="text" id="qsSinglePassword" maxlength="32" placeholder="请输入 4-32 位密码"></label>
+              </div>
+            </div>
+            <div class="setting-subpanel" id="qsPasswordListPanel" hidden>
+              <div class="setting-grid">
+                <label class="setting-field is-wide"><span>密码列表（每行一个）</span><textarea id="qsPasswordList" placeholder="A1B2C3&#10;D4E5F6&#10;G7H8I9"></textarea></label>
+              </div>
+              <label class="setting-check" style="margin-top:11px"><input type="checkbox" id="qsPasswordSingleUse" checked> 每个密码仅可使用一次</label>
+            </div>
+            <div class="setting-subpanel" id="qsPasswordSmsPanel" hidden>
+              <div class="setting-grid">
+                <label class="setting-field"><span>验证码有效期</span><select id="qsSmsExpire"><option value="5">5 分钟</option><option value="10" selected>10 分钟</option><option value="30">30 分钟</option></select></label>
+                <label class="setting-field"><span>同一手机号每日可获取次数</span><input type="number" id="qsSmsDailyLimit" min="1" max="20" value="5"></label>
+              </div>
+            </div>
+            <div class="setting-grid" id="qsPasswordHintWrap" style="margin-top:13px" hidden>
+              <label class="setting-field is-wide"><span>密码错误提示语</span><input type="text" id="qsPasswordHint" maxlength="60" placeholder="密码不正确，请联系发放人员核对后重新输入"></label>
+            </div>
+          </section>
+
+          <section class="setting-section">
+            <div class="setting-section-head">
+              <h3>提交后显示</h3>
+              <p>设置填写者提交答卷后看到的内容，可显示感谢语、跳转到指定网址或直接查看统计结果。</p>
+            </div>
+            <div class="setting-radio-list" id="qsSubmitModeList">
+              <label class="setting-radio"><input type="radio" name="qsSubmitMode" value="thanks" checked><span><strong>显示感谢信息</strong><span>提交后展示自定义的感谢语或后续说明</span></span></label>
+              <label class="setting-radio"><input type="radio" name="qsSubmitMode" value="redirect"><span><strong>跳转到指定网址</strong><span>提交后自动跳转到指定页面</span></span></label>
+              <label class="setting-radio"><input type="radio" name="qsSubmitMode" value="statistics"><span><strong>显示统计结果</strong><span>提交后直接展示本问卷的统计分析结果</span></span></label>
+            </div>
+            <div class="setting-subpanel" id="qsSubmitThanksPanel">
+              <div class="setting-grid">
+                <label class="setting-field is-wide"><span>感谢信息</span><textarea id="qsThanksText" maxlength="300" placeholder="感谢您的参与！您的意见将帮助我们持续改进公共服务。">感谢您的参与！您的意见将帮助我们持续改进公共服务。</textarea></label>
+              </div>
+            </div>
+            <div class="setting-subpanel" id="qsSubmitRedirectPanel" hidden>
+              <div class="setting-grid">
+                <label class="setting-field"><span>跳转网址</span><input type="url" id="qsRedirectUrl" placeholder="https://example.gov.cn/thanks"></label>
+                <label class="setting-field"><span>跳转倒计时</span><select id="qsRedirectDelay"><option value="0">立即跳转</option><option value="3" selected>3 秒后跳转</option><option value="5">5 秒后跳转</option></select></label>
+              </div>
+            </div>
+            <div class="setting-subpanel" id="qsSubmitStatisticsPanel" hidden>
+              <label class="setting-check"><input type="checkbox" id="qsStatisticsWithChart" checked> 同时展示图表分析结果</label>
+            </div>
+          </section>
+
+          <section class="setting-section">
+            <div class="setting-section-head">
+              <h3>作答次数限制</h3>
+              <p>通过 IP、设备、微信账号等方式防止重复填写，也可限定只能通过系统发放的链接进入。</p>
+            </div>
+            <div class="setting-limit-row">
+              <div class="setting-limit-copy"><strong>每个 IP 限制作答次数</strong><span>适用于公网发放，不建议在共用网络环境中开启</span></div>
+              <div class="setting-limit-control">
+                <label>次数<input type="number" id="qsIpLimitCount" min="1" max="99" value="1"></label>
+                <button class="settings-switch" type="button" role="switch" aria-checked="false" id="qsIpLimitSwitch"></button>
+              </div>
+            </div>
+            <div class="setting-limit-row">
+              <div class="setting-limit-copy"><strong>同一电脑 / 手机限制作答次数</strong><span>通过浏览器 Cookie 识别同一设备</span></div>
+              <div class="setting-limit-control">
+                <label>次数<input type="number" id="qsDeviceLimitCount" min="1" max="99" value="1"></label>
+                <button class="settings-switch on" type="button" role="switch" aria-checked="true" id="qsDeviceLimitSwitch"></button>
+              </div>
+            </div>
+            <div class="setting-limit-row">
+              <div class="setting-limit-copy"><strong>每个微信用户限制作答次数</strong><span>需微信授权后按微信账号统计</span></div>
+              <div class="setting-limit-control">
+                <label>次数<input type="number" id="qsWechatLimitCount" min="1" max="99" value="1"></label>
+                <button class="settings-switch" type="button" role="switch" aria-checked="false" id="qsWechatLimitSwitch"></button>
+              </div>
+            </div>
+            <div class="setting-limit-row">
+              <div class="setting-limit-copy"><strong>仅允许通过系统邮件 / 短信链接访问</strong><span>开启后只能通过平台发放的专属链接进入问卷</span></div>
+              <div class="setting-limit-control">
+                <button class="settings-switch" type="button" role="switch" aria-checked="false" id="qsInviteOnlySwitch"></button>
+              </div>
+            </div>
+            <div class="setting-grid" style="margin-top:13px">
+              <label class="setting-field is-wide"><span>超出限制提示语</span><input type="text" id="qsLimitHint" maxlength="60" placeholder="您已提交过本问卷，感谢您的参与"></label>
+            </div>
+          </section>
+
+          <section class="setting-section">
+            <div class="setting-section-head">
+              <h3>分享与查询</h3>
+              <p>设置问卷分享到微信等渠道时的展示信息，以及是否开放统计结果和答卷查询。</p>
+            </div>
+            <div class="setting-grid">
+              <label class="setting-field"><span>分享标题</span><input type="text" id="qsShareTitle" maxlength="60" placeholder="默认使用问卷标题"></label>
+              <label class="setting-field"><span>分享缩略图地址</span><input type="url" id="qsShareImage" placeholder="https://example.com/share.png"></label>
+              <label class="setting-field is-wide"><span>分享描述</span><input type="text" id="qsShareDesc" maxlength="120" placeholder="欢迎参与本次调研，您的意见很重要"></label>
+            </div>
+            <div class="setting-grid" style="margin-top:13px">
+              <label class="setting-field"><span>统计结果对外分享</span><select id="qsDataShareMode"><option value="none">不开放</option><option value="open">无密码分享</option><option value="password">密码分享</option></select></label>
+              <label class="setting-field" id="qsDataSharePasswordWrap" hidden><span>查询密码</span><input type="text" id="qsDataSharePassword" maxlength="32" placeholder="请输入查询密码"></label>
+            </div>
+            <div class="setting-limit-row" style="margin-top:6px">
+              <div class="setting-limit-copy"><strong>允许提交后查询已填答卷</strong><span>填写者可凭查询条件检索自己提交的答卷</span></div>
+              <div class="setting-limit-control">
+                <button class="settings-switch" type="button" role="switch" aria-checked="false" id="qsAllowQuerySwitch"></button>
+              </div>
+            </div>
+            <div class="setting-subpanel" id="qsQueryPanel" hidden>
+              <div class="setting-grid">
+                <label class="setting-field is-wide"><span>查询条件字段</span><input type="text" id="qsQueryFields" maxlength="80" placeholder="例如：姓名、手机号（需问卷中存在对应填空题）"></label>
+                <label class="setting-field is-wide"><span>查询页面提示文字</span><input type="text" id="qsQueryHint" maxlength="80" placeholder="请输入姓名和手机号查询您提交的答卷"></label>
+                <label class="setting-field"><span>查询开始时间</span><input type="datetime-local" id="qsQueryStart"></label>
+                <label class="setting-field"><span>查询结束时间</span><input type="datetime-local" id="qsQueryEnd"></label>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="ai-dialog-foot appearance-dialog-foot">
+          <div class="appearance-foot-left">
+            <button class="btn btn-ghost" type="button" id="resetSurveySettingBtn"><svg class="ic"><use href="#i-sort"/></svg>恢复默认设置</button>
+          </div>
+          <div class="appearance-foot-left">
+            <span class="ai-generate-status" id="surveySettingStatus" aria-live="polite"></span>
+            <button class="btn btn-ghost" type="button" id="cancelSurveySettingBtn">取消</button>
+            <button class="btn btn-primary" type="button" id="confirmSurveySettingBtn"><svg class="ic"><use href="#i-check-circle"/></svg>保存设置</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="ai-modal" id="appearanceModal" hidden>
+      <section class="ai-dialog appearance-dialog" role="dialog" aria-modal="true" aria-labelledby="appearanceTitle">
+        <div class="ai-dialog-head">
+          <h2 class="ai-dialog-title" id="appearanceTitle"><svg class="ic"><use href="#i-monitor"/></svg>问卷外观设置</h2>
+          <button class="ai-close" id="closeAppearanceModalBtn" aria-label="关闭"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="ai-dialog-body">
+          <section class="appearance-section">
+            <div class="appearance-section-head">
+              <h3>预定义主题</h3>
+              <p>选择主题后将同步更新封面配色、按钮颜色和页面底色，可在下方继续微调。</p>
+            </div>
+            <div class="appearance-theme-list" id="appearanceThemeList"></div>
+          </section>
+
+          <section class="appearance-section">
+            <div class="appearance-section-head">
+              <h3>问卷背景</h3>
+              <p>可设置封面渐变配色与页面底色，也可填写自定义背景图片地址（推荐尺寸 1440×540px）。</p>
+            </div>
+            <div class="appearance-grid">
+              <label class="appearance-field"><span>封面起始色</span><span class="appearance-color"><input type="color" id="appearanceCoverStart" aria-label="封面起始色"><input type="text" id="appearanceCoverStartHex" maxlength="7" aria-label="封面起始色代码"></span></label>
+              <label class="appearance-field"><span>封面结束色</span><span class="appearance-color"><input type="color" id="appearanceCoverEnd" aria-label="封面结束色"><input type="text" id="appearanceCoverEndHex" maxlength="7" aria-label="封面结束色代码"></span></label>
+              <label class="appearance-field"><span>页面底色</span><span class="appearance-color"><input type="color" id="appearanceBackgroundColor" aria-label="页面底色"><input type="text" id="appearanceBackgroundColorHex" maxlength="7" aria-label="页面底色代码"></span></label>
+              <label class="appearance-field"><span>自定义背景图片地址</span><input type="url" id="appearanceBackgroundImage" placeholder="https://example.com/cover.png"></label>
+            </div>
+            <label class="appearance-check" style="margin-top:13px"><input type="checkbox" id="appearanceBackgroundOnMobile" checked> 背景图应用到移动端</label>
+          </section>
+
+          <section class="appearance-section">
+            <div class="appearance-section-head">
+              <h3>问卷页眉与页脚</h3>
+              <p>页眉可放置单位 logo，页脚可填写版权或单位信息，居中显示在问卷底部。</p>
+            </div>
+            <div class="appearance-grid">
+              <label class="appearance-field"><span>页眉 logo 地址</span><input type="url" id="appearanceHeaderLogoUrl" placeholder="https://example.com/logo.png"></label>
+              <label class="appearance-field"><span>页眉对齐方式</span><select id="appearanceHeaderAlign"><option value="flex-start">左对齐</option><option value="center">居中</option><option value="flex-end">右对齐</option></select></label>
+              <label class="appearance-field"><span>页脚信息</span><input type="text" id="appearanceFooterText" maxlength="80" placeholder="例如：国务院发展研究中心信息中心 版权所有"></label>
+            </div>
+            <div class="appearance-switch-row">
+              <div class="appearance-switch-copy"><strong>显示问卷页眉</strong><span>开启后在问卷顶部展示 logo 区域</span></div>
+              <button class="settings-switch" type="button" role="switch" aria-checked="false" id="appearanceHeaderSwitch"></button>
+            </div>
+          </section>
+
+          <section class="appearance-section">
+            <div class="appearance-section-head">
+              <h3>文字格式</h3>
+              <p>设置问卷字体、字号，以及标题、题干和按钮的颜色。</p>
+            </div>
+            <div class="appearance-grid">
+              <label class="appearance-field"><span>字体</span><select id="appearanceFontFamily"><option value="">系统默认</option><option value="&quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif">苹方 / 微软雅黑</option><option value="&quot;Source Han Serif SC&quot;, &quot;Songti SC&quot;, serif">思源宋体</option><option value="&quot;HarmonyOS Sans SC&quot;, &quot;Noto Sans SC&quot;, sans-serif">鸿蒙 / 思源黑体</option></select></label>
+              <label class="appearance-field"><span>字号</span><select id="appearanceFontSize"><option value="13">小</option><option value="14" selected>标准</option><option value="16">大</option></select></label>
+              <label class="appearance-field"><span>标题文字颜色</span><span class="appearance-color"><input type="color" id="appearanceTitleColor" aria-label="标题文字颜色"><input type="text" id="appearanceTitleColorHex" maxlength="7" aria-label="标题文字颜色代码"></span></label>
+              <label class="appearance-field"><span>题干文字颜色</span><span class="appearance-color"><input type="color" id="appearanceQuestionColor" aria-label="题干文字颜色"><input type="text" id="appearanceQuestionColorHex" maxlength="7" aria-label="题干文字颜色代码"></span></label>
+              <label class="appearance-field"><span>按钮颜色</span><span class="appearance-color"><input type="color" id="appearanceButtonColor" aria-label="按钮颜色"><input type="text" id="appearanceButtonColorHex" maxlength="7" aria-label="按钮颜色代码"></span></label>
+            </div>
+          </section>
+
+          <section class="appearance-section">
+            <div class="appearance-section-head">
+              <h3>显示设置</h3>
+              <p>控制作答页面中标题、题型标签、二维码、翻页和进度条的显示方式。</p>
+            </div>
+            <label class="appearance-field" style="max-width:260px"><span>进度条</span><select id="appearanceProgressMode"><option value="none">不显示</option><option value="question">按题目显示</option><option value="page">按分页显示</option></select></label>
+            <div style="margin-top:6px">
+              <div class="appearance-switch-row">
+                <div class="appearance-switch-copy"><strong>显示问卷标题</strong><span>关闭后作答页面不展示问卷标题</span></div>
+                <button class="settings-switch on" type="button" role="switch" aria-checked="true" id="appearanceShowTitleSwitch"></button>
+              </div>
+              <div class="appearance-switch-row">
+                <div class="appearance-switch-copy"><strong>显示题型标签</strong><span>在题目右侧提示单选、多选等题型</span></div>
+                <button class="settings-switch" type="button" role="switch" aria-checked="false" id="appearanceShowTypeTagSwitch"></button>
+              </div>
+              <div class="appearance-switch-row">
+                <div class="appearance-switch-copy"><strong>显示二维码</strong><span>电脑端作答页面右上角展示问卷二维码</span></div>
+                <button class="settings-switch on" type="button" role="switch" aria-checked="true" id="appearanceShowQrSwitch"></button>
+              </div>
+              <div class="appearance-switch-row">
+                <div class="appearance-switch-copy"><strong>允许返回上一页</strong><span>分页问卷中允许作答者返回修改已填内容</span></div>
+                <button class="settings-switch on" type="button" role="switch" aria-checked="true" id="appearanceAllowPrevSwitch"></button>
+              </div>
+            </div>
+          </section>
+
+          <section class="appearance-section">
+            <div class="appearance-section-head">
+              <h3>按钮自定义</h3>
+              <p>自定义提交按钮以及分页问卷的翻页按钮文案。</p>
+            </div>
+            <div class="appearance-grid">
+              <label class="appearance-field"><span>提交按钮文字</span><input type="text" id="appearanceSubmitText" maxlength="20" placeholder="提交问卷"></label>
+              <label class="appearance-field"><span>上一页按钮文字</span><input type="text" id="appearancePrevText" maxlength="20" placeholder="上一页"></label>
+              <label class="appearance-field"><span>下一页按钮文字</span><input type="text" id="appearanceNextText" maxlength="20" placeholder="下一页"></label>
+            </div>
+          </section>
+        </div>
+        <div class="ai-dialog-foot appearance-dialog-foot">
+          <div class="appearance-foot-left">
+            <button class="btn btn-ghost" type="button" id="resetAppearanceBtn"><svg class="ic"><use href="#i-sort"/></svg>恢复为初始外观</button>
+            <button class="btn btn-ghost" type="button" id="saveAppearanceThemeBtn"><svg class="ic"><use href="#i-star"/></svg>存为我的主题</button>
+            <label class="appearance-check"><input type="checkbox" id="appearanceApplyToAll"> 应用到我的所有问卷</label>
+          </div>
+          <div class="appearance-foot-left">
+            <span class="ai-generate-status" id="appearanceStatus" aria-live="polite"></span>
+            <button class="btn btn-ghost" type="button" id="cancelAppearanceBtn">取消</button>
+            <button class="btn btn-primary" type="button" id="confirmAppearanceBtn"><svg class="ic"><use href="#i-check-circle"/></svg>保存设置</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="ai-modal" id="textImportModal" hidden>
+      <section class="ai-dialog text-import-dialog" role="dialog" aria-modal="true" aria-labelledby="textImportTitle" aria-describedby="textImportHint">
+        <div class="ai-dialog-head">
+          <h2 class="ai-dialog-title" id="textImportTitle"><svg class="ic"><use href="#i-report"/></svg>从文本创建题目</h2>
+          <button class="ai-close" id="closeTextImportModalBtn" aria-label="关闭"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="ai-dialog-body">
+          <p class="cascader-modal-hint" id="textImportHint">每行一条内容：题干用“1.”“1、”等序号开头，可在末尾用【单选题】【多选题】等标注题型；选项行用“A.”“A、”或“-”开头。未标注题型时，有选项按单选识别（题干含“多选”按多选），无选项按简答题识别；题干标注“选填”的题目不设为必填。</p>
+          <label class="ai-field-label" for="textImportInput">问卷文本</label>
+          <textarea class="ai-prompt" id="textImportInput" maxlength="8000" placeholder="1. 您的性别？【单选题】
+A. 男
+B. 女
+
+2. 您平时通过哪些渠道获取信息？【多选题】
+A. 短视频平台
+B. 新闻客户端
+C. 亲友推荐
+
+3. 您对本次服务有哪些意见或建议？（选填）【简答题】"></textarea>
+          <div class="text-import-summary" id="textImportSummary" aria-live="polite">识别结果：请先粘贴问卷文本</div>
+          <label class="text-import-option"><input type="checkbox" id="textImportReplace"> 覆盖现有题目（导入前清空编辑区）</label>
+        </div>
+        <div class="ai-dialog-foot">
+          <span class="ai-generate-status" id="textImportStatus" aria-live="polite"></span>
+          <button class="btn btn-ghost" type="button" id="cancelTextImportBtn">取消</button>
+          <button class="btn btn-primary" type="button" id="confirmTextImportBtn"><svg class="ic"><use href="#i-plus"/></svg>创建题目</button>
         </div>
       </section>
     </div>
@@ -5089,6 +5619,40 @@
   const aiModelSelect = document.getElementById('aiModelSelect');
   const aiWebSearch = document.getElementById('aiWebSearch');
   const aiGenerateStatus = document.getElementById('aiGenerateStatus');
+  const textImportBtn = document.getElementById('textImportBtn');
+  const questionnaireTextImportBtn = document.getElementById('questionnaireTextImportBtn');
+  const surveySettingBtn = document.getElementById('surveySettingBtn');
+  const surveySettingModal = document.getElementById('surveySettingModal');
+  const closeSurveySettingModalBtn = document.getElementById('closeSurveySettingModalBtn');
+  const cancelSurveySettingBtn = document.getElementById('cancelSurveySettingBtn');
+  const confirmSurveySettingBtn = document.getElementById('confirmSurveySettingBtn');
+  const resetSurveySettingBtn = document.getElementById('resetSurveySettingBtn');
+  const surveySettingStatus = document.getElementById('surveySettingStatus');
+  const appearanceBtn = document.getElementById('appearanceBtn');
+  const appearanceModal = document.getElementById('appearanceModal');
+  const closeAppearanceModalBtn = document.getElementById('closeAppearanceModalBtn');
+  const cancelAppearanceBtn = document.getElementById('cancelAppearanceBtn');
+  const confirmAppearanceBtn = document.getElementById('confirmAppearanceBtn');
+  const resetAppearanceBtn = document.getElementById('resetAppearanceBtn');
+  const saveAppearanceThemeBtn = document.getElementById('saveAppearanceThemeBtn');
+  const appearanceApplyToAll = document.getElementById('appearanceApplyToAll');
+  const appearanceStatus = document.getElementById('appearanceStatus');
+  const appearanceThemeList = document.getElementById('appearanceThemeList');
+  const appearanceHeaderSwitch = document.getElementById('appearanceHeaderSwitch');
+  const appearanceProgressMode = document.getElementById('appearanceProgressMode');
+  const phonePreviewScreen = document.getElementById('phonePreviewScreen');
+  const phonePreviewHeader = document.getElementById('phonePreviewHeader');
+  const phonePreviewProgress = document.getElementById('phonePreviewProgress');
+  const phonePreviewProgressText = document.getElementById('phonePreviewProgressText');
+  const phonePreviewFooter = document.getElementById('phonePreviewFooter');
+  const textImportModal = document.getElementById('textImportModal');
+  const closeTextImportModalBtn = document.getElementById('closeTextImportModalBtn');
+  const cancelTextImportBtn = document.getElementById('cancelTextImportBtn');
+  const confirmTextImportBtn = document.getElementById('confirmTextImportBtn');
+  const textImportInput = document.getElementById('textImportInput');
+  const textImportSummary = document.getElementById('textImportSummary');
+  const textImportReplace = document.getElementById('textImportReplace');
+  const textImportStatus = document.getElementById('textImportStatus');
   const openDesktopPreviewBtn = document.getElementById('openDesktopPreviewBtn');
   const phonePreviewTitle = document.getElementById('phonePreviewTitle');
   const phonePreviewQuestions = document.getElementById('phonePreviewQuestions');
@@ -5174,6 +5738,7 @@
   const surveyStepButtons = [...document.querySelectorAll('[data-survey-step]')];
   const surveyStepPanes = [...document.querySelectorAll('[data-survey-pane]')];
   let aiModalTrigger = aiGenerateBtn;
+  let textImportTrigger = textImportBtn;
   let pendingDeleteRows = [];
   let deleteModalTrigger = null;
   let pendingCopyRow = null;
@@ -6973,30 +7538,47 @@
 
   function renderPhonePreview() {
     const model = getQuestionnaireModel();
+    const style = appearanceModal.hidden ? appearance : appearanceDraft;
     phonePreviewTitle.textContent = model.title;
+    const pager = style.allowPrevPage
+      ? `<div class="phone-pager"><button type="button">${escapeHTML(style.prevText || '上一页')}</button><button type="button">${escapeHTML(style.nextText || '下一页')}</button></div>`
+      : '';
     phonePreviewQuestions.innerHTML = model.questions.map(question => `
       <section class="phone-question">
         <div class="phone-question-title">
           ${question.number}. ${escapeHTML(question.title)}
           ${question.required ? '<em>*</em>' : ''}
+          ${style.showTypeTag ? `<small>${escapeHTML(question.type)}</small>` : ''}
         </div>
         ${previewAnswerMarkup(question, true)}
       </section>
-    `).join('') + '<button class="phone-submit" type="button">提交问卷</button>';
+    `).join('') + pager + `<button class="phone-submit" type="button">${escapeHTML(style.submitText || '提交问卷')}</button>`;
   }
 
   function desktopPreviewDocument() {
     const model = getQuestionnaireModel();
+    const style = appearanceModal.hidden ? appearance : appearanceDraft;
+    const baseFontSize = Number(style.fontSize) + 1;
+    const coverImage = safeAppearanceUrl(style.backgroundImage);
+    const headerLogo = style.showHeader ? safeAppearanceUrl(style.headerLogoUrl) : '';
     const questions = model.questions.map(question => `
       <section class="question">
         <div class="question-title">
           <span class="number">${question.number}.</span>
           <span>${escapeHTML(question.title)}${question.required ? '<em>*</em>' : ''}</span>
-          <small>${escapeHTML(question.type)}</small>
+          ${style.showTypeTag ? `<small>${escapeHTML(question.type)}</small>` : ''}
         </div>
         <div class="answer">${previewAnswerMarkup(question)}</div>
       </section>
     `).join('');
+    const progress = style.progressMode === 'none' ? '' : `
+      <div class="progress">
+        <span class="progress-track"><i style="width:${style.progressMode === 'page' ? '100%' : '0%'}"></i></span>
+        <span>${style.progressMode === 'page' ? '第 1/1 页' : `已完成 0/${model.questions.length} 题`}</span>
+      </div>`;
+    const pager = style.allowPrevPage
+      ? `<div class="pager"><button type="button" class="ghost">${escapeHTML(style.prevText || '上一页')}</button><button type="button" class="ghost">${escapeHTML(style.nextText || '下一页')}</button></div>`
+      : '';
     return `<!doctype html>
       <html lang="zh-CN">
       <head>
@@ -7004,20 +7586,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>${escapeHTML(model.title)} - 电脑预览</title>
         <style>
-          *{box-sizing:border-box}body{margin:0;background:#f2f5fa;color:#101f3d;font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:15px;line-height:1.6}
-          header{background:#0a2a6b;color:#fff;padding:42px 24px}header div{max-width:960px;margin:auto}h1{margin:0;font-size:30px;letter-spacing:0}header p{margin:8px 0 0;color:#c6d5f2}
+          *{box-sizing:border-box}body{margin:0;background:${style.backgroundColor};color:${style.questionColor};font-family:${style.fontFamily || '"PingFang SC","Microsoft YaHei",Arial,sans-serif'};font-size:${baseFontSize}px;line-height:1.6}
+          .site-header{display:flex;justify-content:${style.headerAlign};padding:12px 24px;background:#fff;border-bottom:1px solid #e2e8f2}.site-header img{max-height:38px;max-width:200px;object-fit:contain}
+          .site-header .logo-fallback{padding:6px 12px;border:1px dashed #cbd6e8;border-radius:5px;color:#94a3b8;font-size:12px}
+          header.cover{position:relative;color:${style.titleColor};padding:42px 24px;background:${coverImage ? `url("${encodeURI(coverImage)}") center/cover no-repeat,` : ''}linear-gradient(135deg,${style.coverStart},${style.coverEnd})}
+          header.cover div{max-width:960px;margin:auto}h1{margin:0;font-size:${baseFontSize + 15}px;letter-spacing:0}header.cover p{margin:8px 0 0;opacity:.8}
+          .qr{position:absolute;top:20px;right:24px;width:82px;height:82px;display:grid;place-items:center;border-radius:8px;background:#fff;color:#5a6785;font-size:11px;text-align:center;line-height:1.4}
           main{width:min(960px,calc(100% - 40px));margin:24px auto 56px}.question{margin-bottom:14px;padding:24px;background:#fff;border:1px solid #e2e8f2;border-radius:8px}
-          .question-title{display:flex;align-items:flex-start;gap:10px;font-size:17px;font-weight:700}.number{color:#0e3a8c}.question-title em{margin-left:4px;color:#e63946;font-style:normal}
+          .progress{display:flex;align-items:center;gap:12px;margin-bottom:16px;color:#5a6785;font-size:13px}.progress-track{flex:1;height:7px;border-radius:999px;background:#e2e8f2;overflow:hidden}.progress-track i{display:block;height:100%;border-radius:999px;background:${style.buttonColor}}
+          .question-title{display:flex;align-items:flex-start;gap:10px;font-size:${baseFontSize + 2}px;font-weight:700}.number{color:${style.buttonColor}}.question-title em{margin-left:4px;color:#e63946;font-style:normal}
           .question-title small{margin-left:auto;padding:2px 9px;border-radius:4px;background:#e3edfd;color:#2f6fe4;font-size:12px;white-space:nowrap}.answer{margin-top:18px}
           .desktop-option{display:flex;align-items:center;gap:9px;margin:11px 0;color:#33415e}.desktop-choice{width:18px;height:18px;border:2px solid #cbd6e8;border-radius:50%}.desktop-choice.multi{border-radius:4px}
           .desktop-input{min-height:74px;padding:12px;border:1px solid #e2e8f2;border-radius:6px;color:#94a3b8;background:#fbfdff}.desktop-rating{color:#d97706;font-size:30px;letter-spacing:0}
-          button{display:block;width:200px;height:44px;margin:26px auto 0;border:0;border-radius:6px;background:#0e3a8c;color:#fff;font-family:inherit;font-size:15px;font-weight:600;box-shadow:none}
-          @media(max-width:640px){header{padding:28px 18px}h1{font-size:23px}main{width:calc(100% - 24px);margin-top:12px}.question{padding:18px}.question-title{flex-wrap:wrap}.question-title small{margin-left:0}}
+          button{display:block;width:200px;height:44px;margin:26px auto 0;border:0;border-radius:6px;background:${style.buttonColor};color:#fff;font-family:inherit;font-size:${baseFontSize}px;font-weight:600;box-shadow:none}
+          .pager{display:flex;justify-content:center;gap:12px;margin-top:22px}.pager button{width:132px;height:40px;margin:0;background:#fff;border:1px solid ${style.buttonColor};color:${style.buttonColor}}
+          .site-footer{padding:20px;color:#8b96ad;font-size:12px;text-align:center}
+          @media(max-width:640px){header.cover{padding:28px 18px}h1{font-size:${baseFontSize + 8}px}main{width:calc(100% - 24px);margin-top:12px}.question{padding:18px}.question-title{flex-wrap:wrap}.question-title small{margin-left:0}.qr{display:none}}
         </style>
       </head>
       <body>
-        <header><div><h1>${escapeHTML(model.title)}</h1><p>请根据实际情况填写，感谢您的参与</p></div></header>
-        <main>${questions}<button type="button">提交问卷</button></main>
+        ${style.showHeader ? `<div class="site-header">${headerLogo ? `<img src="${escapeHTML(headerLogo)}" alt="问卷页眉 logo">` : '<span class="logo-fallback">页眉 logo</span>'}</div>` : ''}
+        <header class="cover"><div>${style.showTitle ? `<h1>${escapeHTML(model.title)}</h1>` : ''}<p>请根据实际情况填写，感谢您的参与</p></div>${style.showQrCode ? '<div class="qr">问卷<br>二维码</div>' : ''}</header>
+        <main>${progress}${questions}${pager}<button type="button">${escapeHTML(style.submitText || '提交问卷')}</button></main>
+        ${style.footerText.trim() ? `<div class="site-footer">${escapeHTML(style.footerText.trim())}</div>` : ''}
       </body>
       </html>`;
   }
@@ -7100,6 +7691,582 @@
       if (openedFromManagement) showPage('editor');
       aiGenerateBtn.focus();
     }, 600);
+  }
+
+  const defaultSurveySettings = {
+    passwordMode: 'none',
+    singlePassword: '',
+    passwordList: '',
+    passwordSingleUse: true,
+    smsExpire: '10',
+    smsDailyLimit: '5',
+    passwordHint: '',
+    submitMode: 'thanks',
+    thanksText: '感谢您的参与！您的意见将帮助我们持续改进公共服务。',
+    redirectUrl: '',
+    redirectDelay: '3',
+    statisticsWithChart: true,
+    ipLimit: false,
+    ipLimitCount: '1',
+    deviceLimit: true,
+    deviceLimitCount: '1',
+    wechatLimit: false,
+    wechatLimitCount: '1',
+    inviteOnly: false,
+    limitHint: '',
+    shareTitle: '',
+    shareImage: '',
+    shareDesc: '',
+    dataShareMode: 'none',
+    dataSharePassword: '',
+    allowQuery: false,
+    queryFields: '',
+    queryHint: '',
+    queryStart: '',
+    queryEnd: ''
+  };
+  let surveySettings = { ...defaultSurveySettings };
+  let surveySettingsDraft = { ...defaultSurveySettings };
+
+  const surveySettingValueFields = [
+    ['singlePassword', 'qsSinglePassword'],
+    ['passwordList', 'qsPasswordList'],
+    ['smsExpire', 'qsSmsExpire'],
+    ['smsDailyLimit', 'qsSmsDailyLimit'],
+    ['passwordHint', 'qsPasswordHint'],
+    ['thanksText', 'qsThanksText'],
+    ['redirectUrl', 'qsRedirectUrl'],
+    ['redirectDelay', 'qsRedirectDelay'],
+    ['ipLimitCount', 'qsIpLimitCount'],
+    ['deviceLimitCount', 'qsDeviceLimitCount'],
+    ['wechatLimitCount', 'qsWechatLimitCount'],
+    ['limitHint', 'qsLimitHint'],
+    ['shareTitle', 'qsShareTitle'],
+    ['shareImage', 'qsShareImage'],
+    ['shareDesc', 'qsShareDesc'],
+    ['dataShareMode', 'qsDataShareMode'],
+    ['dataSharePassword', 'qsDataSharePassword'],
+    ['queryFields', 'qsQueryFields'],
+    ['queryHint', 'qsQueryHint'],
+    ['queryStart', 'qsQueryStart'],
+    ['queryEnd', 'qsQueryEnd']
+  ];
+  const surveySettingCheckFields = [
+    ['passwordSingleUse', 'qsPasswordSingleUse'],
+    ['statisticsWithChart', 'qsStatisticsWithChart']
+  ];
+  const surveySettingSwitchFields = [
+    ['ipLimit', 'qsIpLimitSwitch'],
+    ['deviceLimit', 'qsDeviceLimitSwitch'],
+    ['wechatLimit', 'qsWechatLimitSwitch'],
+    ['inviteOnly', 'qsInviteOnlySwitch'],
+    ['allowQuery', 'qsAllowQuerySwitch']
+  ];
+
+  function updateSurveySettingVisibility() {
+    const draft = surveySettingsDraft;
+    document.getElementById('qsPasswordSinglePanel').hidden = draft.passwordMode !== 'single';
+    document.getElementById('qsPasswordListPanel').hidden = draft.passwordMode !== 'list';
+    document.getElementById('qsPasswordSmsPanel').hidden = draft.passwordMode !== 'sms';
+    document.getElementById('qsPasswordHintWrap').hidden = draft.passwordMode === 'none' || draft.passwordMode === 'sms';
+    document.getElementById('qsSubmitThanksPanel').hidden = draft.submitMode !== 'thanks';
+    document.getElementById('qsSubmitRedirectPanel').hidden = draft.submitMode !== 'redirect';
+    document.getElementById('qsSubmitStatisticsPanel').hidden = draft.submitMode !== 'statistics';
+    document.getElementById('qsDataSharePasswordWrap').hidden = draft.dataShareMode !== 'password';
+    document.getElementById('qsQueryPanel').hidden = !draft.allowQuery;
+    document.querySelectorAll('#qsPasswordModeList .setting-radio').forEach(item => {
+      item.classList.toggle('is-selected', item.querySelector('input').value === draft.passwordMode);
+    });
+    document.querySelectorAll('#qsSubmitModeList .setting-radio').forEach(item => {
+      item.classList.toggle('is-selected', item.querySelector('input').value === draft.submitMode);
+    });
+    document.getElementById('qsIpLimitCount').disabled = !draft.ipLimit;
+    document.getElementById('qsDeviceLimitCount').disabled = !draft.deviceLimit;
+    document.getElementById('qsWechatLimitCount').disabled = !draft.wechatLimit;
+  }
+
+  function syncSurveySettingForm() {
+    surveySettingValueFields.forEach(([key, id]) => { document.getElementById(id).value = surveySettingsDraft[key]; });
+    surveySettingCheckFields.forEach(([key, id]) => { document.getElementById(id).checked = Boolean(surveySettingsDraft[key]); });
+    surveySettingSwitchFields.forEach(([key, id]) => {
+      const toggle = document.getElementById(id);
+      toggle.classList.toggle('on', Boolean(surveySettingsDraft[key]));
+      toggle.setAttribute('aria-checked', String(Boolean(surveySettingsDraft[key])));
+    });
+    const passwordRadio = document.querySelector(`input[name="qsPasswordMode"][value="${surveySettingsDraft.passwordMode}"]`);
+    if (passwordRadio) passwordRadio.checked = true;
+    const submitRadio = document.querySelector(`input[name="qsSubmitMode"][value="${surveySettingsDraft.submitMode}"]`);
+    if (submitRadio) submitRadio.checked = true;
+    updateSurveySettingVisibility();
+  }
+
+  function validateSurveySettings() {
+    const draft = surveySettingsDraft;
+    if (draft.passwordMode === 'single' && draft.singlePassword.trim().length < 4) {
+      return { message: '请输入至少 4 位的问卷密码', focus: 'qsSinglePassword' };
+    }
+    if (draft.passwordMode === 'list' && !draft.passwordList.split(/\r?\n/).some(line => line.trim())) {
+      return { message: '请至少填写一个密码', focus: 'qsPasswordList' };
+    }
+    if (draft.submitMode === 'thanks' && !draft.thanksText.trim()) {
+      return { message: '请填写提交后展示的感谢信息', focus: 'qsThanksText' };
+    }
+    if (draft.submitMode === 'redirect' && !/^https?:\/\/.+/i.test(draft.redirectUrl.trim())) {
+      return { message: '请填写以 http:// 或 https:// 开头的跳转网址', focus: 'qsRedirectUrl' };
+    }
+    if (draft.dataShareMode === 'password' && !draft.dataSharePassword.trim()) {
+      return { message: '请设置统计结果的查询密码', focus: 'qsDataSharePassword' };
+    }
+    if (draft.allowQuery && !draft.queryFields.trim()) {
+      return { message: '请填写至少一个查询条件字段', focus: 'qsQueryFields' };
+    }
+    if (draft.allowQuery && draft.queryStart && draft.queryEnd && draft.queryStart > draft.queryEnd) {
+      return { message: '查询结束时间不能早于开始时间', focus: 'qsQueryEnd' };
+    }
+    return null;
+  }
+
+  function summarizeSurveySettings(state) {
+    const parts = [];
+    const passwordLabels = { single: '单个密码', list: '密码列表', sms: '短信验证码' };
+    if (passwordLabels[state.passwordMode]) parts.push(`答题密码：${passwordLabels[state.passwordMode]}`);
+    const submitLabels = { thanks: '显示感谢信息', redirect: '跳转指定网址', statistics: '显示统计结果' };
+    parts.push(`提交后${submitLabels[state.submitMode]}`);
+    const limits = [];
+    if (state.ipLimit) limits.push(`IP ${state.ipLimitCount} 次`);
+    if (state.deviceLimit) limits.push(`同一设备 ${state.deviceLimitCount} 次`);
+    if (state.wechatLimit) limits.push(`微信 ${state.wechatLimitCount} 次`);
+    if (state.inviteOnly) limits.push('仅限专属链接');
+    if (limits.length) parts.push(`作答限制：${limits.join('、')}`);
+    if (state.dataShareMode !== 'none') parts.push(state.dataShareMode === 'password' ? '统计结果密码分享' : '统计结果公开分享');
+    if (state.allowQuery) parts.push('开放答卷查询');
+    return parts.join('；');
+  }
+
+  function openSurveySettingModal() {
+    surveySettingsDraft = { ...surveySettings };
+    syncSurveySettingForm();
+    surveySettingStatus.textContent = '';
+    surveySettingModal.hidden = false;
+    document.body.classList.add('modal-open');
+    requestAnimationFrame(() => closeSurveySettingModalBtn.focus());
+  }
+
+  function closeSurveySettingModal() {
+    surveySettingModal.hidden = true;
+    document.body.classList.remove('modal-open');
+    surveySettingStatus.textContent = '';
+    if (surveySettingBtn.isConnected) surveySettingBtn.focus();
+  }
+
+  function saveSurveySettings() {
+    const error = validateSurveySettings();
+    if (error) {
+      surveySettingStatus.textContent = error.message;
+      document.getElementById(error.focus)?.focus();
+      return;
+    }
+    surveySettings = { ...surveySettingsDraft };
+    scheduleQuestionnaireAutoSave();
+    closeSurveySettingModal();
+    showQuestionnaireSaveToast(`问卷设置已保存 · ${summarizeSurveySettings(surveySettings)}`);
+  }
+
+  const appearanceThemes = [
+    { id: 'gov-blue', name: '政务蓝', coverStart: '#0a2a6b', coverEnd: '#123f8f', buttonColor: '#0e3a8c', backgroundColor: '#f4f7fc' },
+    { id: 'tech-cyan', name: '科技青', coverStart: '#06414f', coverEnd: '#0b7285', buttonColor: '#0b7285', backgroundColor: '#f1f8fa' },
+    { id: 'elegant-purple', name: '典雅紫', coverStart: '#3b2465', coverEnd: '#5b3fa8', buttonColor: '#5b3fa8', backgroundColor: '#f7f5fd' },
+    { id: 'vital-orange', name: '活力橙', coverStart: '#7c3208', coverEnd: '#c2570c', buttonColor: '#c2570c', backgroundColor: '#fff8f1' },
+    { id: 'fresh-green', name: '清新绿', coverStart: '#0f4a34', coverEnd: '#177f56', buttonColor: '#177f56', backgroundColor: '#f2faf6' },
+    { id: 'steady-ink', name: '沉稳墨', coverStart: '#1c2434', coverEnd: '#3a4a66', buttonColor: '#2f3b52', backgroundColor: '#f5f6f9' }
+  ];
+  const defaultAppearance = {
+    theme: 'gov-blue',
+    coverStart: '#0a2a6b',
+    coverEnd: '#123f8f',
+    backgroundColor: '#f4f7fc',
+    backgroundImage: '',
+    backgroundOnMobile: true,
+    showHeader: false,
+    headerLogoUrl: '',
+    headerAlign: 'flex-start',
+    footerText: '',
+    fontFamily: '',
+    fontSize: '14',
+    titleColor: '#ffffff',
+    questionColor: '#101f3d',
+    buttonColor: '#0e3a8c',
+    progressMode: 'none',
+    showTitle: true,
+    showTypeTag: false,
+    showQrCode: true,
+    allowPrevPage: true,
+    submitText: '提交问卷',
+    prevText: '上一页',
+    nextText: '下一页'
+  };
+  let appearance = { ...defaultAppearance };
+  let appearanceDraft = { ...defaultAppearance };
+  const customAppearanceThemes = [];
+
+  const appearanceColorFields = [
+    ['coverStart', 'appearanceCoverStart', 'appearanceCoverStartHex'],
+    ['coverEnd', 'appearanceCoverEnd', 'appearanceCoverEndHex'],
+    ['backgroundColor', 'appearanceBackgroundColor', 'appearanceBackgroundColorHex'],
+    ['titleColor', 'appearanceTitleColor', 'appearanceTitleColorHex'],
+    ['questionColor', 'appearanceQuestionColor', 'appearanceQuestionColorHex'],
+    ['buttonColor', 'appearanceButtonColor', 'appearanceButtonColorHex']
+  ];
+  const appearanceTextFields = [
+    ['backgroundImage', 'appearanceBackgroundImage'],
+    ['headerLogoUrl', 'appearanceHeaderLogoUrl'],
+    ['footerText', 'appearanceFooterText'],
+    ['submitText', 'appearanceSubmitText'],
+    ['prevText', 'appearancePrevText'],
+    ['nextText', 'appearanceNextText']
+  ];
+  const appearanceSelectFields = [
+    ['headerAlign', 'appearanceHeaderAlign'],
+    ['fontFamily', 'appearanceFontFamily'],
+    ['fontSize', 'appearanceFontSize'],
+    ['progressMode', 'appearanceProgressMode']
+  ];
+  const appearanceSwitchFields = [
+    ['showHeader', 'appearanceHeaderSwitch'],
+    ['showTitle', 'appearanceShowTitleSwitch'],
+    ['showTypeTag', 'appearanceShowTypeTagSwitch'],
+    ['showQrCode', 'appearanceShowQrSwitch'],
+    ['allowPrevPage', 'appearanceAllowPrevSwitch']
+  ];
+
+  function isValidHexColor(value) {
+    return /^#[0-9a-f]{6}$/i.test(value.trim());
+  }
+
+  function safeAppearanceUrl(value) {
+    const url = value.trim();
+    if (!url) return '';
+    return /^https?:\/\//i.test(url) || url.startsWith('data:image/') ? url : '';
+  }
+
+  function renderAppearanceThemes() {
+    const themes = [...appearanceThemes, ...customAppearanceThemes];
+    appearanceThemeList.replaceChildren(...themes.map(theme => {
+      const button = document.createElement('button');
+      button.className = `appearance-theme${appearanceDraft.theme === theme.id ? ' is-active' : ''}`;
+      button.type = 'button';
+      button.dataset.themeId = theme.id;
+      button.setAttribute('aria-pressed', String(appearanceDraft.theme === theme.id));
+      const swatch = document.createElement('span');
+      swatch.className = 'appearance-theme-swatch';
+      swatch.style.background = `linear-gradient(135deg, ${theme.coverStart}, ${theme.coverEnd})`;
+      const name = document.createElement('span');
+      name.className = 'appearance-theme-name';
+      name.textContent = theme.name;
+      button.append(swatch, name);
+      return button;
+    }));
+  }
+
+  function syncAppearanceForm() {
+    appearanceColorFields.forEach(([key, colorId, hexId]) => {
+      document.getElementById(colorId).value = appearanceDraft[key];
+      document.getElementById(hexId).value = appearanceDraft[key];
+    });
+    appearanceTextFields.forEach(([key, id]) => { document.getElementById(id).value = appearanceDraft[key]; });
+    appearanceSelectFields.forEach(([key, id]) => { document.getElementById(id).value = appearanceDraft[key]; });
+    appearanceSwitchFields.forEach(([key, id]) => {
+      const toggle = document.getElementById(id);
+      toggle.classList.toggle('on', Boolean(appearanceDraft[key]));
+      toggle.setAttribute('aria-checked', String(Boolean(appearanceDraft[key])));
+    });
+    document.getElementById('appearanceBackgroundOnMobile').checked = appearanceDraft.backgroundOnMobile;
+    renderAppearanceThemes();
+  }
+
+  function applyAppearance(state) {
+    const coverImage = safeAppearanceUrl(state.backgroundImage);
+    const useCoverImage = coverImage && state.backgroundOnMobile;
+    phonePreviewScreen.style.setProperty('--pv-cover-start', state.coverStart);
+    phonePreviewScreen.style.setProperty('--pv-cover-end', state.coverEnd);
+    phonePreviewScreen.style.setProperty('--pv-bg', state.backgroundColor);
+    phonePreviewScreen.style.setProperty('--pv-title-color', state.titleColor);
+    phonePreviewScreen.style.setProperty('--pv-question-color', state.questionColor);
+    phonePreviewScreen.style.setProperty('--pv-button', state.buttonColor);
+    phonePreviewScreen.style.setProperty('--pv-font-size', `${state.fontSize}px`);
+    phonePreviewScreen.style.setProperty('--pv-font-family', state.fontFamily || 'inherit');
+    phonePreviewScreen.style.setProperty('--pv-header-justify', state.headerAlign);
+    phonePreviewScreen.style.setProperty('--pv-cover-image', useCoverImage ? `url("${encodeURI(coverImage)}")` : 'none');
+
+    phonePreviewHeader.hidden = !state.showHeader;
+    if (state.showHeader) {
+      const logo = safeAppearanceUrl(state.headerLogoUrl);
+      if (logo) {
+        const image = document.createElement('img');
+        image.src = logo;
+        image.alt = '问卷页眉 logo';
+        // Fall back to the placeholder when the logo address cannot be loaded.
+        image.addEventListener('error', () => {
+          const fallback = document.createElement('span');
+          fallback.className = 'phone-logo-fallback';
+          fallback.textContent = '页眉 logo 加载失败';
+          phonePreviewHeader.replaceChildren(fallback);
+        });
+        phonePreviewHeader.replaceChildren(image);
+      } else {
+        const placeholder = document.createElement('span');
+        placeholder.className = 'phone-logo-fallback';
+        placeholder.textContent = '页眉 logo';
+        phonePreviewHeader.replaceChildren(placeholder);
+      }
+    }
+
+    phonePreviewFooter.hidden = !state.footerText.trim();
+    phonePreviewFooter.textContent = state.footerText.trim();
+
+    const questionCount = questionList.querySelectorAll('.question-card').length;
+    phonePreviewProgress.hidden = state.progressMode === 'none';
+    if (state.progressMode === 'question') {
+      phonePreviewProgress.style.setProperty('--pv-progress-width', '0%');
+      phonePreviewProgressText.textContent = `已完成 0/${questionCount} 题`;
+    } else if (state.progressMode === 'page') {
+      phonePreviewProgress.style.setProperty('--pv-progress-width', '100%');
+      phonePreviewProgressText.textContent = '第 1/1 页';
+    }
+    document.getElementById('phonePreviewTitle').hidden = !state.showTitle;
+  }
+
+  function openAppearanceModal() {
+    appearanceDraft = { ...appearance };
+    syncAppearanceForm();
+    appearanceApplyToAll.checked = false;
+    appearanceStatus.textContent = '';
+    appearanceModal.hidden = false;
+    document.body.classList.add('modal-open');
+    requestAnimationFrame(() => closeAppearanceModalBtn.focus());
+  }
+
+  function closeAppearanceModal(revert = true) {
+    if (revert) {
+      applyAppearance(appearance);
+      renderPhonePreview();
+    }
+    appearanceModal.hidden = true;
+    document.body.classList.remove('modal-open');
+    appearanceStatus.textContent = '';
+    if (appearanceBtn.isConnected) appearanceBtn.focus();
+  }
+
+  function updateAppearanceDraft(key, value) {
+    appearanceDraft[key] = value;
+    applyAppearance(appearanceDraft);
+    renderPhonePreview();
+  }
+
+  function saveAppearance() {
+    appearance = { ...appearanceDraft };
+    applyAppearance(appearance);
+    renderPhonePreview();
+    scheduleQuestionnaireAutoSave();
+    const scope = appearanceApplyToAll.checked ? '，并已应用到我的所有问卷' : '';
+    closeAppearanceModal(false);
+    showQuestionnaireSaveToast(`问卷外观设置已保存${scope}`);
+  }
+
+  const textImportTypeAliases = [
+    ['单选题', ['单选题', '单项选择题', '单项选择', '单选']],
+    ['多选题', ['多选题', '多项选择题', '多项选择', '多选']],
+    ['多项填空', ['多项填空', '多个填空']],
+    ['单项填空', ['单项填空', '填空题', '填空']],
+    ['简答题', ['简答题', '简答', '开放题', '主观题', '文本题']],
+    ['多级下拉', ['多级下拉', '级联下拉', '下拉题', '下拉']],
+    ['日期题', ['日期题', '日期']],
+    ['分页栏', ['分页栏', '分页']],
+    ['一题一页', ['一题一页']],
+    ['段落说明', ['段落说明', '说明文字']],
+    ['矩阵单选', ['矩阵单选']],
+    ['矩阵多选', ['矩阵多选']],
+    ['矩阵填空', ['矩阵填空']],
+    ['矩阵量表', ['矩阵量表']],
+    ['矩阵滑动条', ['矩阵滑动条', '滑动条']],
+    ['表格数值', ['表格数值']],
+    ['表格填空', ['表格填空']],
+    ['表格下拉框', ['表格下拉框', '表格下拉']],
+    ['表格组合', ['表格组合']],
+    ['自增表格', ['自增表格']],
+    ['量表题', ['量表题', '量表']],
+    ['评分单选', ['评分单选']],
+    ['评分多选', ['评分多选']],
+    ['评价题', ['评价题', '评价', '打分', '评分']]
+  ];
+  // Longer aliases first so “矩阵单选” is not resolved as “单选”.
+  const textImportAliasIndex = textImportTypeAliases
+    .flatMap(([type, aliases]) => aliases.map(alias => ({ alias, type })))
+    .sort((a, b) => b.alias.length - a.alias.length);
+  const textImportChoiceTypes = ['单选题', '多选题', '评分单选', '评分多选'];
+  const textImportOptionPattern = /^(?:[A-Za-z][.、)）:：]|[-–—*·•○●◇◆□■☐]|[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮])\s*(.+)$/;
+  const textImportNumberPattern = /^(?:[（(]\s*\d{1,3}\s*[)）]|第?\s*\d{1,3}\s*[.、:：]|Q\s*\d{1,3}\s*[.、)）:：]?)\s*(.*)$/i;
+
+  function matchTextImportType(text) {
+    const value = text.trim();
+    if (!value) return '';
+    return textImportAliasIndex.find(item => value.includes(item.alias))?.type || '';
+  }
+
+  function extractTextImportType(line) {
+    const markers = [...line.matchAll(/[【\[]([^】\]]{1,12})[】\]]|[（(]([^）)]{1,12})[）)]/g)];
+    for (const match of markers) {
+      const content = (match[1] ?? match[2] ?? '').trim();
+      const type = matchTextImportType(content);
+      // Keep hints such as “（可多选）” in the title; drop plain type labels.
+      if (type) return { type, marker: /^可/.test(content) ? '' : match[0] };
+    }
+    return { type: '', marker: '' };
+  }
+
+  function parseQuestionnaireText(raw) {
+    const questions = [];
+    let current = null;
+    const finishCurrent = () => {
+      if (!current) return;
+      if (!current.type) {
+        if (current.options.length) current.type = /多选|多项|多个/.test(current.title) ? '多选题' : '单选题';
+        else current.type = '简答题';
+      }
+      if (!textImportChoiceTypes.includes(current.type)) current.options = [];
+      questions.push(current);
+      current = null;
+    };
+
+    raw.split(/\r?\n/).forEach(rawLine => {
+      const line = rawLine.trim();
+      if (!line) return;
+      const numberMatch = line.match(textImportNumberPattern);
+      const { type, marker } = extractTextImportType(line);
+      const isQuestionLine = Boolean(type) || Boolean(numberMatch) || !current;
+      if (!isQuestionLine) {
+        const optionMatch = line.match(textImportOptionPattern);
+        if (optionMatch) {
+          const label = optionMatch[1].trim();
+          if (label) current.options.push(label);
+          return;
+        }
+      }
+      finishCurrent();
+      let title = marker ? line.replace(marker, ' ') : line;
+      const numbered = title.match(textImportNumberPattern);
+      if (numbered) title = numbered[1];
+      title = title
+        .replace(/[（(【\[]\s*(?:必填|选填|非必填|可不填)\s*[）)】\]]/g, ' ')
+        .replace(/^[*＊]+\s*/, '')
+        .replace(/[*＊]+\s*$/, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      current = {
+        type,
+        title,
+        required: !/选填|非必填|可不填/.test(line),
+        options: []
+      };
+    });
+    finishCurrent();
+    return questions.filter(question => question.title);
+  }
+
+  function createTextImportOptionField(label, multi, manageable) {
+    const mark = document.createElement('span');
+    mark.className = multi ? 'check-box' : 'radio-dot';
+    const input = document.createElement('input');
+    input.className = 'q-config-input';
+    input.setAttribute('data-option', '');
+    input.setAttribute('aria-label', '编辑选项');
+    input.value = label;
+    if (!manageable) {
+      const item = document.createElement('label');
+      item.className = 'option-item';
+      item.append(mark, input);
+      return item;
+    }
+    const remove = document.createElement('button');
+    remove.className = 'q-option-remove';
+    remove.type = 'button';
+    remove.setAttribute('data-remove-option', '');
+    remove.setAttribute('aria-label', '删除选项');
+    remove.innerHTML = '<svg class="ic"><use href="#i-trash"/></svg>';
+    const field = document.createElement('div');
+    field.className = 'q-option-field';
+    field.append(mark, input, remove);
+    return field;
+  }
+
+  function applyTextImportOptions(card, options) {
+    if (!options.length) return;
+    const list = card.querySelector('.q-option-editor');
+    if (!list) return;
+    const manageable = list.classList.contains('is-manageable');
+    const multi = Boolean(list.querySelector('.check-box'));
+    list.replaceChildren(...options.map(label => createTextImportOptionField(label, multi, manageable)));
+  }
+
+  function summarizeTextImport(questions) {
+    if (!questions.length) return '识别结果：暂未识别到题目';
+    const counts = new Map();
+    questions.forEach(question => counts.set(question.type, (counts.get(question.type) || 0) + 1));
+    const detail = [...counts].map(([type, count]) => `${type} ${count} 道`).join('、');
+    return `识别结果：共 ${questions.length} 道题目（${detail}）`;
+  }
+
+  function updateTextImportSummary() {
+    const value = textImportInput.value.trim();
+    if (!value) {
+      textImportSummary.textContent = '识别结果：请先粘贴问卷文本';
+      return;
+    }
+    textImportSummary.textContent = summarizeTextImport(parseQuestionnaireText(value));
+  }
+
+  function openTextImportModal(event) {
+    textImportTrigger = event?.currentTarget || document.activeElement || textImportBtn;
+    textImportModal.hidden = false;
+    document.body.classList.add('modal-open');
+    textImportStatus.textContent = '';
+    updateTextImportSummary();
+    requestAnimationFrame(() => textImportInput.focus());
+  }
+
+  function closeTextImportModal(restoreFocus = true) {
+    textImportModal.hidden = true;
+    document.body.classList.remove('modal-open');
+    textImportStatus.textContent = '';
+    if (restoreFocus && textImportTrigger?.isConnected) textImportTrigger.focus();
+  }
+
+  function importQuestionsFromText() {
+    const questions = parseQuestionnaireText(textImportInput.value);
+    if (!questions.length) {
+      textImportStatus.textContent = '未识别到题目，请按提示调整文本格式';
+      textImportInput.focus();
+      return;
+    }
+    const openedFromManagement = textImportTrigger === questionnaireTextImportBtn;
+    if (textImportReplace.checked) {
+      questionList.querySelectorAll('.question-card').forEach(card => card.remove());
+    }
+    questions.forEach(question => {
+      addQuestion(question.type);
+      const card = [...questionList.querySelectorAll('.question-card')].at(-1);
+      if (!card) return;
+      const titleNode = card.querySelector('.q-edit-title');
+      if (titleNode) titleNode.textContent = question.title;
+      card.querySelector('.q-required .switch')?.classList.toggle('on', question.required);
+      applyTextImportOptions(card, question.options);
+    });
+    renderPhonePreview();
+    scheduleQuestionnaireAutoSave();
+    closeTextImportModal(false);
+    showQuestionnaireSaveToast(`已从文本创建 ${questions.length} 道题，请确认后保存`);
+    if (openedFromManagement) showPage('editor');
+    if (textImportTrigger?.isConnected) textImportTrigger.focus();
   }
 
   function rowCheckboxes() {
@@ -7815,10 +8982,151 @@
   aiGenerateModal.addEventListener('click', event => {
     if (event.target === aiGenerateModal) closeAiGenerateModal();
   });
+  surveySettingBtn.addEventListener('click', openSurveySettingModal);
+  closeSurveySettingModalBtn.addEventListener('click', closeSurveySettingModal);
+  cancelSurveySettingBtn.addEventListener('click', closeSurveySettingModal);
+  confirmSurveySettingBtn.addEventListener('click', saveSurveySettings);
+  surveySettingModal.addEventListener('click', event => {
+    if (event.target === surveySettingModal) closeSurveySettingModal();
+  });
+  surveySettingValueFields.forEach(([key, id]) => {
+    const field = document.getElementById(id);
+    field.addEventListener(field.tagName === 'SELECT' ? 'change' : 'input', event => {
+      surveySettingsDraft[key] = event.target.value;
+      surveySettingStatus.textContent = '';
+      if (key === 'dataShareMode') updateSurveySettingVisibility();
+    });
+  });
+  surveySettingCheckFields.forEach(([key, id]) => {
+    document.getElementById(id).addEventListener('change', event => { surveySettingsDraft[key] = event.target.checked; });
+  });
+  surveySettingSwitchFields.forEach(([key, id]) => {
+    document.getElementById(id).addEventListener('click', event => {
+      const isOn = event.currentTarget.classList.toggle('on');
+      event.currentTarget.setAttribute('aria-checked', String(isOn));
+      surveySettingsDraft[key] = isOn;
+      surveySettingStatus.textContent = '';
+      updateSurveySettingVisibility();
+    });
+  });
+  document.querySelectorAll('input[name="qsPasswordMode"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      surveySettingsDraft.passwordMode = radio.value;
+      surveySettingStatus.textContent = '';
+      updateSurveySettingVisibility();
+    });
+  });
+  document.querySelectorAll('input[name="qsSubmitMode"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      surveySettingsDraft.submitMode = radio.value;
+      surveySettingStatus.textContent = '';
+      updateSurveySettingVisibility();
+    });
+  });
+  resetSurveySettingBtn.addEventListener('click', () => {
+    surveySettingsDraft = { ...defaultSurveySettings };
+    syncSurveySettingForm();
+    surveySettingStatus.textContent = '已恢复默认设置，保存后生效';
+  });
+  appearanceBtn.addEventListener('click', openAppearanceModal);
+  closeAppearanceModalBtn.addEventListener('click', () => closeAppearanceModal());
+  cancelAppearanceBtn.addEventListener('click', () => closeAppearanceModal());
+  confirmAppearanceBtn.addEventListener('click', saveAppearance);
+  appearanceModal.addEventListener('click', event => {
+    if (event.target === appearanceModal) closeAppearanceModal();
+  });
+  appearanceColorFields.forEach(([key, colorId, hexId]) => {
+    const colorInput = document.getElementById(colorId);
+    const hexInput = document.getElementById(hexId);
+    colorInput.addEventListener('input', () => {
+      hexInput.value = colorInput.value;
+      appearanceDraft.theme = '';
+      renderAppearanceThemes();
+      updateAppearanceDraft(key, colorInput.value);
+    });
+    hexInput.addEventListener('input', () => {
+      if (!isValidHexColor(hexInput.value)) return;
+      const value = hexInput.value.trim().toLowerCase();
+      colorInput.value = value;
+      appearanceDraft.theme = '';
+      renderAppearanceThemes();
+      updateAppearanceDraft(key, value);
+    });
+  });
+  appearanceTextFields.forEach(([key, id]) => {
+    document.getElementById(id).addEventListener('input', event => updateAppearanceDraft(key, event.target.value));
+  });
+  appearanceSelectFields.forEach(([key, id]) => {
+    document.getElementById(id).addEventListener('change', event => updateAppearanceDraft(key, event.target.value));
+  });
+  appearanceSwitchFields.forEach(([key, id]) => {
+    document.getElementById(id).addEventListener('click', event => {
+      const isOn = event.currentTarget.classList.toggle('on');
+      event.currentTarget.setAttribute('aria-checked', String(isOn));
+      updateAppearanceDraft(key, isOn);
+    });
+  });
+  document.getElementById('appearanceBackgroundOnMobile').addEventListener('change', event => {
+    updateAppearanceDraft('backgroundOnMobile', event.target.checked);
+  });
+  appearanceThemeList.addEventListener('click', event => {
+    const button = event.target.closest('[data-theme-id]');
+    if (!button) return;
+    const theme = [...appearanceThemes, ...customAppearanceThemes].find(item => item.id === button.dataset.themeId);
+    if (!theme) return;
+    Object.assign(appearanceDraft, {
+      theme: theme.id,
+      coverStart: theme.coverStart,
+      coverEnd: theme.coverEnd,
+      buttonColor: theme.buttonColor,
+      backgroundColor: theme.backgroundColor
+    });
+    syncAppearanceForm();
+    applyAppearance(appearanceDraft);
+    renderPhonePreview();
+    appearanceStatus.textContent = `已应用“${theme.name}”主题`;
+  });
+  resetAppearanceBtn.addEventListener('click', () => {
+    appearanceDraft = { ...defaultAppearance };
+    syncAppearanceForm();
+    applyAppearance(appearanceDraft);
+    renderPhonePreview();
+    appearanceStatus.textContent = '已恢复为初始外观，保存后生效';
+  });
+  saveAppearanceThemeBtn.addEventListener('click', () => {
+    const name = `我的主题 ${customAppearanceThemes.length + 1}`;
+    const id = `custom-${Date.now()}`;
+    customAppearanceThemes.push({
+      id,
+      name,
+      coverStart: appearanceDraft.coverStart,
+      coverEnd: appearanceDraft.coverEnd,
+      buttonColor: appearanceDraft.buttonColor,
+      backgroundColor: appearanceDraft.backgroundColor
+    });
+    appearanceDraft.theme = id;
+    renderAppearanceThemes();
+    appearanceStatus.textContent = `已存为“${name}”`;
+  });
+  textImportBtn.addEventListener('click', openTextImportModal);
+  questionnaireTextImportBtn.addEventListener('click', openTextImportModal);
+  closeTextImportModalBtn.addEventListener('click', () => closeTextImportModal());
+  cancelTextImportBtn.addEventListener('click', () => closeTextImportModal());
+  confirmTextImportBtn.addEventListener('click', importQuestionsFromText);
+  textImportInput.addEventListener('input', () => {
+    textImportStatus.textContent = '';
+    updateTextImportSummary();
+  });
+  textImportModal.addEventListener('click', event => {
+    if (event.target === textImportModal) closeTextImportModal();
+  });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !aiGenerateModal.hidden && !confirmAiGenerateBtn.disabled) {
       closeAiGenerateModal();
     }
+    if (event.key === 'Escape' && !textImportModal.hidden) closeTextImportModal();
+    if (event.key === 'Escape' && !appearanceModal.hidden) closeAppearanceModal();
+    if (event.key === 'Escape' && !surveySettingModal.hidden) closeSurveySettingModal();
     if (event.key === 'Escape' && !cascaderOptionsModal.hidden) closeCascaderOptionsModal();
     if (event.key === 'Escape' && !deleteConfirmModal.hidden) closeDeleteConfirm();
     if (event.key === 'Escape' && !copyConfirmModal.hidden) closeCopyConfirm();
@@ -7874,6 +9182,9 @@
   });
   document.getElementById('addQuestionBtn').addEventListener('click', () => addQuestion('单选题'));
   updateTitleCount();
+  syncSurveySettingForm();
+  syncAppearanceForm();
+  applyAppearance(appearance);
   renderPhonePreview();
   updateQuestionSelection();
 
